@@ -10,7 +10,9 @@
   /* ---------- Preloader ---------- */
   const preloader = document.getElementById('preloader');
   window.addEventListener('load', () => {
-    setTimeout(() => preloader.classList.add('is-done'), 1400);
+    if (preloader) {
+      setTimeout(() => preloader.classList.add('is-done'), 1400);
+    }
   });
 
   /* ---------- Year ---------- */
@@ -27,8 +29,7 @@
   tick(); setInterval(tick, 1000);
 
   /* ---------- Wrap reveal lines with rl-inner ---------- */
-  document.querySelectorAll('.reveal-line').forEach((el, i) => {
-    // wrap contents into a span so we can transform independently
+  document.querySelectorAll('.reveal-line').forEach((el) => {
     const inner = document.createElement('span');
     inner.className = 'rl-inner';
     inner.innerHTML = el.innerHTML;
@@ -87,9 +88,11 @@
     const p = Math.max(0, Math.min(1, y / (h || 1)));
     if (progress) progress.style.width = (p * 100).toFixed(2) + '%';
 
-    if (y > 40) nav.classList.add('is-scrolled'); else nav.classList.remove('is-scrolled');
-    if (y > 200 && y > lastY + 4) nav.classList.add('is-hidden');
-    else if (y < lastY - 4) nav.classList.remove('is-hidden');
+    if (nav) {
+      if (y > 40) nav.classList.add('is-scrolled'); else nav.classList.remove('is-scrolled');
+      if (y > 200 && y > lastY + 4) nav.classList.add('is-hidden');
+      else if (y < lastY - 4) nav.classList.remove('is-hidden');
+    }
     lastY = y;
   }
   if (lenis) lenis.on('scroll', onScroll);
@@ -174,15 +177,15 @@
 
   /* ---------- Tilt cards ---------- */
   document.querySelectorAll('[data-tilt]').forEach(el => {
-    let raf;
+    let rafId;
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width;
       const py = (e.clientY - r.top) / r.height;
       const rx = (py - 0.5) * -6;
-      const ry = (px - 0.5) *  6;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
+      const ry = (px - 0.5) * 6;
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
         el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
       });
     });
@@ -208,11 +211,11 @@
 
   /* ---------- Horizontal gallery drag on scroll ---------- */
   const gTrack = document.getElementById('galleryTrack');
-  if (gTrack){
+  if (gTrack && gTrack.parentElement){
     function moveGallery(){
       const r = gTrack.parentElement.getBoundingClientRect();
       const vh = window.innerHeight;
-      const progress = 1 - (r.top / vh); // 0 when entering, 1 when leaving
+      const progress = 1 - (r.top / vh);
       const p = Math.max(0, Math.min(1, progress));
       const max = gTrack.scrollWidth - window.innerWidth;
       gTrack.style.transform = `translateX(${-(p * Math.min(max, gTrack.scrollWidth * 0.35))}px)`;
@@ -223,11 +226,9 @@
     moveGallery();
   }
 
-  /* ---------- Hero title enter (staggered) - already CSS animated ---------- */
-  // trigger initial state after preloader exit
+  /* ---------- Hero title enter (staggered) ---------- */
   window.addEventListener('load', () => {
     document.body.classList.add('is-loaded');
-    // ensure reveal-line elements above the fold animate promptly
     setTimeout(() => {
       document.querySelectorAll('.hero .reveal-line').forEach(el => el.classList.add('is-in'));
     }, 100);
