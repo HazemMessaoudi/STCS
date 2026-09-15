@@ -1,67 +1,376 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Super Site Web</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>STCS — Clôture & Sécurité | Portfolio</title>
+<meta name="description" content="STCS — La Société Tunisienne de Clôture & Sécurité. Grillage, fil galvanisé, fil barbelé, panneaux rigides et solutions de sécurité." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" type="image/jpeg" href="assets/brand/logo.jpg" />
 </head>
 <body>
 
-    <!-- Barre de navigation -->
-    <header>
-        <div class="logo">🚀 MonProjet</div>
-        <nav>
-            <ul>
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<!-- Grain overlay -->
+<div class="grain" aria-hidden="true"></div>
 
-    <!-- Section d'accueil (Hero) avec image de fond -->
-    <section id="accueil" class="hero">
-        <div class="hero-texte">
-            <h1>Donnez vie à vos idées en ligne</h1>
-            <p>Un site web moderne, rapide et hébergé gratuitement grâce à GitHub et Render.</p>
-            <a href="#services" class="bouton">Découvrir</a>
+<!-- Custom cursor -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<!-- Progress bar -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-logo">
+      <span class="pl-letter">S</span><span class="pl-letter">T</span><span class="pl-letter">C</span><span class="pl-letter">S</span>
+    </div>
+    <div class="preloader-bar"><span></span></div>
+    <p class="preloader-caption">Clôture &amp; Sécurité</p>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav-brand" data-magnetic>
+    <img src="assets/brand/logo.jpg" alt="STCS" />
+    <span>STCS</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#about"><span>01</span> About</a>
+    <a href="#products"><span>02</span> Products</a>
+    <a href="#values"><span>03</span> Why us</a>
+    <a href="#offer"><span>04</span> Offer</a>
+    <a href="#contact"><span>05</span> Contact</a>
+  </nav>
+  <a href="#contact" class="nav-cta" data-magnetic>
+    <span>Get a quote</span>
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-grid"></div>
+      <div class="hero-orb hero-orb--1"></div>
+      <div class="hero-orb hero-orb--2"></div>
+    </div>
+
+    <div class="hero-meta">
+      <span class="pill"><i></i> Tunisia · Available nationwide</span>
+      <span class="clock" id="clock">--:--:--</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="line"><span class="reveal">Fencing that</span></span>
+      <span class="line"><span class="reveal">stands the test</span></span>
+      <span class="line"><span class="reveal"><em>of time.</em></span></span>
+    </h1>
+
+    <div class="hero-foot">
+      <div class="hero-brand">
+        <img src="assets/brand/logo.jpg" alt="STCS logo" class="hero-logo" data-parallax="0.15" />
+        <div>
+          <p class="hero-kicker">STCS · Société Tunisienne de Clôture &amp; Sécurité</p>
+          <p class="hero-sub">Manufacturer &amp; distributor of high-grade fencing wire, mesh, welded panels and site-security accessories — engineered for farms, factories, roads and homes across Tunisia.</p>
         </div>
-    </section>
+      </div>
+      <a href="#products" class="scroll-hint" data-magnetic>
+        <span>Explore catalogue</span>
+        <span class="scroll-hint-arrow"></span>
+      </a>
+    </div>
 
-    <!-- Section avec 3 images (Services / Présentation) -->
-    <section id="services" class="contenu-section">
-        <h2>Ce que nous proposons</h2>
-        <p class="sous-titre">Découvrez nos différents domaines d'expertise.</p>
-        
-        <div class="grille-images">
-            <!-- Carte 1 -->
-            <div class="carte">
-                <img src="https://picsum.photos/id/119/400/300" alt="Design et Création">
-                <h3>Design Épuré</h3>
-                <p>Une interface claire pour une meilleure expérience utilisateur.</p>
-            </div>
-            
-            <!-- Carte 2 -->
-            <div class="carte">
-                <img src="https://picsum.photos/id/0/400/300" alt="Développement Code">
-                <h3>Code Performant</h3>
-                <p>Développé avec les dernières technologies du web.</p>
-            </div>
-            
-            <!-- Carte 3 -->
-            <div class="carte">
-                <img src="https://picsum.photos/id/160/400/300" alt="Communication">
-                <h3>Toujours Connecté</h3>
-                <p>Accessible sur ordinateur, tablette et smartphone.</p>
-            </div>
+    <!-- Marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Grillage Simple Torsion</span><em>◆</em>
+        <span>Grillage Triple Torsion</span><em>◆</em>
+        <span>Fil Barbelé</span><em>◆</em>
+        <span>Fil Galvanisé</span><em>◆</em>
+        <span>Panneau Rigide</span><em>◆</em>
+        <span>Gabion</span><em>◆</em>
+        <span>Portails</span><em>◆</em>
+        <span>Accessoires</span><em>◆</em>
+        <span>Grillage Simple Torsion</span><em>◆</em>
+        <span>Grillage Triple Torsion</span><em>◆</em>
+        <span>Fil Barbelé</span><em>◆</em>
+        <span>Fil Galvanisé</span><em>◆</em>
+        <span>Panneau Rigide</span><em>◆</em>
+        <span>Gabion</span><em>◆</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat">
+      <span class="stat-num" data-count="12">0</span><span class="plus">+</span>
+      <p>Years securing perimeters</p>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="850">0</span><span class="plus">+</span>
+      <p>Projects delivered</p>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="24">0</span><span class="plus">/7</span>
+      <p>Support &amp; installation</p>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="100">0</span><span class="plus">%</span>
+      <p>Made-in-Tunisia quality</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-head">
+      <span class="eyebrow">01 — About STCS</span>
+      <h2 class="section-title">
+        <span class="reveal-line">Perimeters, protected.</span>
+        <span class="reveal-line"><em>Standards, exceeded.</em></span>
+      </h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-copy">
+        <p class="lead">STCS — <strong>Société Tunisienne de Clôture &amp; Sécurité</strong> — supplies premium fencing and perimeter-protection products across Tunisia. From galvanised wire spooled by weight to fully welded green panels, every SKU is engineered to resist corrosion, tension and time.</p>
+        <p>We serve farmers reclaiming land, factories securing yards, municipalities lining highways, and homeowners protecting what they love. Our team handles specification, delivery and — when needed — installation.</p>
+        <ul class="checklist">
+          <li>Hot-dip galvanised steel, up to 4.9 mm gauge</li>
+          <li>PVC-coated panels in signature STCS green</li>
+          <li>Bulk pricing for professionals &amp; installers</li>
+          <li>Same-week delivery across the Republic</li>
+        </ul>
+      </div>
+      <div class="about-visual">
+        <div class="about-card">
+          <img src="assets/brand/logo.jpg" alt="STCS emblem" />
+          <div class="about-card-meta">
+            <span>Est. Tunisia</span>
+            <span>Clôture &amp; Sécurité</span>
+          </div>
         </div>
-    </section>
+        <div class="about-tag"><i></i> ISO-grade materials</div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Pied de page -->
-    <footer id="contact">
-        <p>&copy; 2026 MonProjet. Créé avec passion.</p>
-    </footer>
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="section-head">
+      <span class="eyebrow">02 — Catalogue</span>
+      <h2 class="section-title">
+        <span class="reveal-line">Every metre.</span>
+        <span class="reveal-line">Every gauge.</span>
+        <span class="reveal-line"><em>One supplier.</em></span>
+      </h2>
+    </div>
 
+    <div class="product-grid">
+
+      <article class="product-card product-card--wide" data-tilt>
+        <div class="pc-media">
+          <img src="assets/products/simple-torsion-3.jpg" alt="Grillage Simple Torsion" loading="lazy" />
+        </div>
+        <div class="pc-body">
+          <span class="pc-cat">Simple Torsion</span>
+          <h3>Grillage Simple Torsion</h3>
+          <p>Flexible, cost-effective mesh for farms, gardens and rural perimeters. Resistant to corrosion, quick to install.</p>
+          <ul class="pc-specs">
+            <li><span>Hauteur</span><strong>1.5m &nbsp;/&nbsp; 2m</strong></li>
+            <li><span>Longueur</span><strong>25m</strong></li>
+            <li><span>Épaisseur</span><strong>2.0 – 2.2mm</strong></li>
+          </ul>
+          <div class="pc-price"><span>from</span><strong>210 DT</strong><em>/ RLX</em></div>
+        </div>
+      </article>
+
+      <article class="product-card" data-tilt>
+        <div class="pc-media"><img src="assets/products/triple-torsion.jpg" alt="Grillage Triple Torsion" loading="lazy" /></div>
+        <div class="pc-body">
+          <span class="pc-cat">Triple Torsion</span>
+          <h3>Grillage Triple Torsion</h3>
+          <p>Heavy-duty mesh built for gabions, retention walls and anti-erosion works.</p>
+          <div class="pc-price"><span>from</span><strong>350 DT</strong><em>/ RLX</em></div>
+        </div>
+      </article>
+
+      <article class="product-card" data-tilt>
+        <div class="pc-media"><img src="assets/products/panneau-1.jpg" alt="Panneau Rigide" loading="lazy" /></div>
+        <div class="pc-body">
+          <span class="pc-cat">Grillage Rigide</span>
+          <h3>Panneau Rigide</h3>
+          <p>Modern welded wire fence in signature green. Clean, professional, industrial-grade.</p>
+          <div class="pc-price"><span>from</span><strong>140 DT</strong><em>/ panel</em></div>
+        </div>
+      </article>
+
+      <article class="product-card" data-tilt>
+        <div class="pc-media"><img src="assets/products/fil-barbele-1.jpg" alt="Fil Barbelé" loading="lazy" /></div>
+        <div class="pc-body">
+          <span class="pc-cat">Accessories</span>
+          <h3>Fil Barbelé</h3>
+          <p>Stainless-steel barbed wire — highest grade of corrosion resistance. Robust hold.</p>
+          <div class="pc-price"><span>from</span><strong>60 DT</strong><em>/ kg</em></div>
+        </div>
+      </article>
+
+      <article class="product-card" data-tilt>
+        <div class="pc-media"><img src="assets/products/fil-galvanise-1.jpg" alt="Fil Galvanisé" loading="lazy" /></div>
+        <div class="pc-body">
+          <span class="pc-cat">Accessories</span>
+          <h3>Fil Galvanisé</h3>
+          <p>Hot-dip galvanised wire from 1.3 mm to 4.9 mm — tension-tested and priced by weight.</p>
+          <div class="pc-price"><span>from</span><strong>5.00 DT</strong><em>/ kg</em></div>
+        </div>
+      </article>
+
+      <article class="product-card product-card--dark" data-tilt>
+        <div class="pc-body pc-body--full">
+          <span class="pc-cat">Custom projects</span>
+          <h3>Gabions, portails &amp; accessoires</h3>
+          <p>Turn-key perimeter solutions: gabion baskets, sliding &amp; swing gates, tension wire, staples and posts.</p>
+          <a href="#contact" class="pc-link" data-magnetic>Request a quote <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Gallery strip -->
+    <div class="gallery-strip">
+      <div class="gallery-track" id="galleryTrack">
+        <figure><img src="assets/products/simple-torsion-1.jpg" alt="" loading="lazy"/></figure>
+        <figure><img src="assets/products/simple-torsion-2.jpg" alt="" loading="lazy"/></figure>
+        <figure><img src="assets/products/fil-galvanise-2.jpg" alt="" loading="lazy"/></figure>
+        <figure><img src="assets/products/fil-galvanise-3.jpg" alt="" loading="lazy"/></figure>
+        <figure><img src="assets/products/fil-barbele-2.jpg" alt="" loading="lazy"/></figure>
+        <figure><img src="assets/products/panneau-2.jpg" alt="" loading="lazy"/></figure>
+        <figure><img src="assets/products/simple-torsion-1.jpg" alt="" loading="lazy"/></figure>
+        <figure><img src="assets/products/fil-galvanise-2.jpg" alt="" loading="lazy"/></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values" id="values">
+    <div class="section-head">
+      <span class="eyebrow">03 — Why STCS</span>
+      <h2 class="section-title">
+        <span class="reveal-line">Built to hold.</span>
+        <span class="reveal-line"><em>Priced to move.</em></span>
+      </h2>
+    </div>
+
+    <div class="value-grid">
+      <div class="value-card" data-tilt>
+        <span class="v-num">01</span>
+        <h4>Corrosion-proof</h4>
+        <p>Hot-dip galvanised finish across every wire and panel — engineered to withstand coastal air, rain and soil salinity.</p>
+      </div>
+      <div class="value-card" data-tilt>
+        <span class="v-num">02</span>
+        <h4>Tension-tested</h4>
+        <p>High tensile strength retained after installation. Panels won’t sag, wires won’t snap — even under load.</p>
+      </div>
+      <div class="value-card" data-tilt>
+        <span class="v-num">03</span>
+        <h4>Delivered fast</h4>
+        <p>Regional stock and dedicated logistics mean orders ship the same week, anywhere in Tunisia.</p>
+      </div>
+      <div class="value-card" data-tilt>
+        <span class="v-num">04</span>
+        <h4>Priced fairly</h4>
+        <p>Direct-from-source pricing on wire and mesh. Volume discounts for installers and contractors.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFER / ADVERTISING -->
+  <section class="offer" id="offer">
+    <div class="offer-inner">
+      <div class="offer-copy">
+        <span class="eyebrow eyebrow--light">04 — Limited offer</span>
+        <h2 class="section-title section-title--light">
+          <span class="reveal-line">Special pricing on</span>
+          <span class="reveal-line"><em>Grillage & wire.</em></span>
+        </h2>
+        <p class="lead lead--light">Exceptional rates on our full torsion range for a limited window. Full technical specs, gauges from 1.5&nbsp;mm to 2.2&nbsp;mm.</p>
+        <div class="offer-ctas">
+          <a href="#contact" class="btn btn--light" data-magnetic>
+            <span>Claim the offer</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="tel:+21628545844" class="btn btn--ghost" data-magnetic>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg>
+            <span>+216 28 545 844</span>
+          </a>
+        </div>
+      </div>
+      <div class="offer-visual">
+        <img src="assets/brand/advertising.jpg" alt="STCS current promotion" />
+        <div class="offer-badge">
+          <span>عرض</span><strong>خاص</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="section-head">
+      <span class="eyebrow">05 — Contact</span>
+      <h2 class="section-title section-title--xl">
+        <span class="reveal-line">Let’s secure</span>
+        <span class="reveal-line"><em>your perimeter.</em></span>
+      </h2>
+    </div>
+
+    <div class="contact-grid">
+      <a class="contact-tile" href="tel:+21628545844" data-magnetic>
+        <span class="ct-label">Call us</span>
+        <strong>28 545 844</strong>
+        <span class="ct-arrow">↗</span>
+      </a>
+      <a class="contact-tile" href="/cdn-cgi/l/email-protection#90f3fffee4f1f3e4d0e3e4f3e3bee4fe" data-magnetic>
+        <span class="ct-label">Email</span>
+        <strong><span class="__cf_email__" data-cfemail="23404c4d5742405763505740500d574d">[email&#160;protected]</span></strong>
+        <span class="ct-arrow">↗</span>
+      </a>
+      <a class="contact-tile" href="#" data-magnetic>
+        <span class="ct-label">Facebook</span>
+        <strong>@STCS.tn</strong>
+        <span class="ct-arrow">↗</span>
+      </a>
+      <a class="contact-tile" href="#" data-magnetic>
+        <span class="ct-label">Location</span>
+        <strong>Tunisia</strong>
+        <span class="ct-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <h3 class="footer-mark">STCS.</h3>
+      <p>Clôture &amp; Sécurité · حلول التسييج والحماية</p>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> STCS — Société Tunisienne de Clôture &amp; Sécurité.</span>
+      <span>Made in Tunisia · Delivered nationwide</span>
+    </div>
+  </footer>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
