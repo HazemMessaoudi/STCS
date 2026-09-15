@@ -3,15 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Premier Site</title>
+    <title>Mon Super Site Web</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Barre de navigation -->
     <header>
-        <h1>Bienvenue sur mon site web !</h1>
+        <div class="logo">🚀 MonProjet</div>
+        <nav>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-    <main>
-        <p>Ce site a été créé de zéro et publié Par la Société STCS "الشركة التونسية للتسييج والأمان".</p>
-    </main>
+
+    <!-- Section d'accueil (Hero) avec image de fond -->
+    <section id="accueil" class="hero">
+        <div class="hero-texte">
+            <h1>Donnez vie à vos idées en ligne</h1>
+            <p>Un site web moderne, rapide et hébergé gratuitement grâce à GitHub et Render.</p>
+            <a href="#services" class="bouton">Découvrir</a>
+        </div>
+    </section>
+
+    <!-- Section avec 3 images (Services / Présentation) -->
+    <section id="services" class="contenu-section">
+        <h2>Ce que nous proposons</h2>
+        <p class="sous-titre">Découvrez nos différents domaines d'expertise.</p>
+        
+        <div class="grille-images">
+            <!-- Carte 1 -->
+            <div class="carte">
+                <img src="https://picsum.photos/id/119/400/300" alt="Design et Création">
+                <h3>Design Épuré</h3>
+                <p>Une interface claire pour une meilleure expérience utilisateur.</p>
+            </div>
+            
+            <!-- Carte 2 -->
+            <div class="carte">
+                <img src="https://picsum.photos/id/0/400/300" alt="Développement Code">
+                <h3>Code Performant</h3>
+                <p>Développé avec les dernières technologies du web.</p>
+            </div>
+            
+            <!-- Carte 3 -->
+            <div class="carte">
+                <img src="https://picsum.photos/id/160/400/300" alt="Communication">
+                <h3>Toujours Connecté</h3>
+                <p>Accessible sur ordinateur, tablette et smartphone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer id="contact">
+        <p>&copy; 2026 MonProjet. Créé avec passion.</p>
+    </footer>
+
 </body>
 </html>
