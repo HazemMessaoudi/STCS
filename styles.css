@@ -89,7 +89,7 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
 }
 .lead--light { color: rgba(255,255,255,.86); }
 
-/* ---------- Grain & cursor ---------- */
+/* ---------- Grain & cursor (Rouleau de grillage) ---------- */
 .grain{
   position: fixed; inset: 0; pointer-events: none; z-index: 9998;
   opacity: .06; mix-blend-mode: multiply;
@@ -101,20 +101,17 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
   z-index: 9999; transition: width .1s linear;
 }
 .cursor{
-  position: fixed; top:0; left:0; width:38px; height:38px; border-radius:50%;
-  border: 1px solid var(--ink); pointer-events:none; z-index: 9999;
-  transform: translate(-50%,-50%); transition: transform .35s var(--ease), width .3s var(--ease), height .3s var(--ease), background .3s, border-color .3s, opacity .3s;
-  mix-blend-mode: difference; opacity: 0;
+  position: fixed; top:0; left:0; width:36px; height:36px; pointer-events:none; z-index: 9999;
+  transform: translate(-50%,-50%); transition: transform .2s var(--ease), opacity .3s;
+  opacity: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><ellipse cx='12' cy='5' rx='8' ry='2.5' fill='%23b8bcbe' stroke='%230f1512' stroke-width='1.2'/><path d='M4 5v13c0 1.38 3.58 2.5 8 2.5s8-1.12 8-2.5V5' fill='%23f4f1ea' stroke='%230f1512' stroke-width='1.2'/><path d='M4 9c0 1.38 3.58 2.5 8 2.5s8-1.12 8-2.5M4 13c0 1.38 3.58 2.5 8 2.5s8-1.12 8-2.5' stroke='%2314442f' stroke-width='1' stroke-dasharray='1.5 1.5'/></svg>");
+  background-repeat: no-repeat; background-position: center; background-size: contain;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
 }
-.cursor-dot{
-  position: fixed; top:0; left:0; width:5px; height:5px; border-radius:50%;
-  background: var(--ink); pointer-events:none; z-index:9999;
-  transform: translate(-50%,-50%); transition: transform .12s linear, opacity .3s;
-  mix-blend-mode: difference; opacity:0;
-}
-.cursor.is-visible, .cursor-dot.is-visible { opacity: 1; }
-.cursor.is-hover { width:70px; height:70px; background: rgba(20,68,47,.15); border-color: transparent; }
-@media (hover: none){ .cursor, .cursor-dot { display: none; } body { cursor: auto; } a, button { cursor: pointer; } }
+.cursor-dot{ display: none; }
+.cursor.is-visible { opacity: 1; }
+.cursor.is-hover { transform: translate(-50%,-50%) scale(1.35) rotate(10deg); }
+@media (hover: none){ .cursor { display: none; } body { cursor: auto; } a, button { cursor: pointer; } }
 
 /* ---------- Floating Social Buttons (WhatsApp, FB, Email) ---------- */
 .social-float {
@@ -353,39 +350,23 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
   background-size: 60% 60%; background-repeat:no-repeat; background-position:center;
 }
 .about-visual{ position: sticky; top: 120px; }
-
-/* MODIFICATION: Carte du Logo élégante et parfaitement encadrée */
 .about-card { 
-  position: relative; 
-  background: var(--white); 
-  border: 1px solid var(--line);
-  border-radius: var(--radius); 
-  padding: 36px 36px 24px;
+  position: relative; background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 36px 36px 24px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   box-shadow: 0 30px 80px -25px rgba(0,0,0,0.12); 
 }
 .about-card-frame {
-  width: 100%;
-  background: #faf8f5;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 26px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
+  width: 100%; background: #faf8f5; border: 1px solid var(--line);
+  border-radius: 14px; padding: 26px 20px; display: flex;
+  align-items: center; justify-content: center; margin-bottom: 24px;
   box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
 }
-.about-card-frame img { 
-  width: 100%; max-width: 230px; height: auto; 
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
-}
+.about-card-frame img { width: 100%; max-width: 230px; height: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06)); }
 .about-card-meta { 
-  width: 100%; display:flex; justify-content: space-between; 
-  color: var(--ink); 
+  width: 100%; display:flex; justify-content: space-between; color: var(--ink); 
   font-family: var(--f-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; 
-  border-top: 1px solid var(--line); padding-top: 16px;
-  opacity: .85; 
+  border-top: 1px solid var(--line); padding-top: 16px; opacity: .85; 
 }
 .about-tag{ position: relative; z-index: 2; margin-top: -30px; margin-left: auto; width: fit-content; padding: 12px 18px; background: var(--bg); border: 1px solid var(--line); border-radius: 100px; font-size: 13px; display:inline-flex; align-items:center; gap:8px; box-shadow: 0 8px 30px -10px rgba(0,0,0,.12); }
 .about-tag i{ width: 8px; height:8px; border-radius:50%; background: var(--green-glow); }
