@@ -223,9 +223,10 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
   display: flex; flex-direction: column; justify-content: space-between;
   position: relative; overflow: hidden; color: var(--white);
 }
+/* UTILISATION DE %20 POUR L'ESPACE DE L'IMAGE DE FOND */
 .hero-bg{ 
   position:absolute; inset:0; z-index:0; pointer-events:none; 
-  background-image: url('assets/products/simple\ torsion1.jpg');
+  background-image: url('assets/products/simple%20torsion1.jpg');
   background-size: cover; background-position: center;
 }
 .hero-overlay {
@@ -475,7 +476,7 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
 
 /* ---------- Offer ---------- */
 .offer{ background: linear-gradient(160deg, var(--green) 0%, var(--ink) 100%); color: var(--bg); position: relative; overflow: hidden; }
-.offer::before{ content:""; position:absolute; inset:0; background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at 30% 50%, #000 30%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 30% 50%, #000 30%, transparent 70%); }
+.offer::before{ content:"absolute"; inset:0; background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at 30% 50%, #000 30%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 30% 50%, #000 30%, transparent 70%); }
 .offer-inner{ position: relative; z-index:1; display:grid; grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 6vw, 100px); align-items: center; max-width: 1400px; margin: 0 auto; }
 .offer-ctas{ display:flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
 .btn{ display:inline-flex; align-items:center; gap: 10px; padding: 16px 26px; border-radius: 100px; font-size: 14px; font-weight: 600; transition: transform .3s var(--ease), background .3s, color .3s, border-color .3s; }
