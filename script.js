@@ -2,6 +2,7 @@
    STCS — Portfolio interactions
    Lenis smooth scroll + scroll-triggered reveals
    + custom cursor + magnetic buttons + counters + parallax
+   + Gestion des fenêtres modales
    ========================================================= */
 
 (() => {
@@ -152,7 +153,6 @@
       requestAnimationFrame(loop);
     }
     loop();
-    // hover targets
     document.querySelectorAll('a, button, [data-magnetic], [data-tilt]').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
@@ -232,6 +232,37 @@
     setTimeout(() => {
       document.querySelectorAll('.hero .reveal-line').forEach(el => el.classList.add('is-in'));
     }, 100);
+  });
+
+  /* =================================================
+     GESTION DES FENÊTRES MODALES (CATALOGUE PRIX)
+     ================================================= */
+  window.ouvrirModale = function(id) {
+    const modale = document.getElementById(id);
+    if (modale) {
+      modale.style.display = 'flex';
+      void modale.offsetWidth; // Force reflow
+      modale.classList.add('is-open');
+      if (lenis) lenis.stop(); // Bloque le scroll arrière
+    }
+  };
+  
+  window.fermerModale = function(id) {
+    const modale = document.getElementById(id);
+    if (modale) {
+      modale.classList.remove('is-open');
+      setTimeout(() => {
+        modale.style.display = 'none';
+        if (lenis) lenis.start(); // Relance le scroll
+      }, 300);
+    }
+  };
+
+  // Fermer la modale si on clique à l'extérieur (dans le fond sombre)
+  window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modale')) {
+      fermerModale(e.target.id);
+    }
   });
 
 })();
