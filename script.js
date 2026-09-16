@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
         preloader.classList.add("is-done");
       }, 700);
     });
-    // Fallback au cas où l'événement load tarde
     setTimeout(() => {
       preloader.classList.add("is-done");
     }, 2500);
@@ -59,6 +58,34 @@ document.addEventListener("DOMContentLoaded", () => {
       el.addEventListener("mouseleave", () => cursor.classList.remove("is-hover"));
     });
   }
+
+  // Animation des chiffres statistiques (Correction du bug à 0)
+  const statsNumbers = document.querySelectorAll("[data-count]");
+  const statsObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.getAttribute("data-count");
+        let count = 0;
+        const duration = 2000; // 2 secondes
+        const increment = target / (duration / 16);
+        
+        const updateCount = () => {
+          count += increment;
+          if (count < target) {
+            el.textContent = Math.ceil(count);
+            requestAnimationFrame(updateCount);
+          } else {
+            el.textContent = target;
+          }
+        };
+        updateCount();
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  statsNumbers.forEach(num => statsObserver.observe(num));
 
   // Barre de progression du scroll
   const scrollProgress = document.getElementById("scrollProgress");
