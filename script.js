@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateClock();
   }
 
-  // Gestion du curseur (Rouleau)
+  // Gestion du curseur
   const cursor = document.getElementById("cursor");
   if (cursor) {
     window.addEventListener("mousemove", (e) => {
