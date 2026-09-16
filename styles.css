@@ -307,7 +307,7 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
 }
 .scroll-hint:hover .scroll-hint-arrow::before{ border-color: var(--white); }
 
-/* ---------- Marquee (Corrigé : lignes blanches et texte en blanc) ---------- */
+/* ---------- Marquee ---------- */
 .marquee{
   position: relative; z-index:1;
   margin-top: 60px;
@@ -353,17 +353,39 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
   background-size: 60% 60%; background-repeat:no-repeat; background-position:center;
 }
 .about-visual{ position: sticky; top: 120px; }
+
+/* MODIFICATION: Carte du Logo élégante et parfaitement encadrée */
 .about-card { 
-  position: relative; background: var(--white); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: 40px 30px 24px;
+  position: relative; 
+  background: var(--white); 
+  border: 1px solid var(--line);
+  border-radius: var(--radius); 
+  padding: 36px 36px 24px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  box-shadow: 0 30px 80px -30px rgba(0,0,0,0.15); 
+  box-shadow: 0 30px 80px -25px rgba(0,0,0,0.12); 
 }
-.about-card img { width: 80%; max-width: 280px; height: auto; margin-bottom: 30px; }
+.about-card-frame {
+  width: 100%;
+  background: #faf8f5;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 26px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+}
+.about-card-frame img { 
+  width: 100%; max-width: 230px; height: auto; 
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
+}
 .about-card-meta { 
-  width: 100%; display:flex; justify-content: space-between; color: var(--ink); 
+  width: 100%; display:flex; justify-content: space-between; 
+  color: var(--ink); 
   font-family: var(--f-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; 
-  border-top: 1px solid var(--line); padding-top: 16px; opacity: .85; 
+  border-top: 1px solid var(--line); padding-top: 16px;
+  opacity: .85; 
 }
 .about-tag{ position: relative; z-index: 2; margin-top: -30px; margin-left: auto; width: fit-content; padding: 12px 18px; background: var(--bg); border: 1px solid var(--line); border-radius: 100px; font-size: 13px; display:inline-flex; align-items:center; gap:8px; box-shadow: 0 8px 30px -10px rgba(0,0,0,.12); }
 .about-tag i{ width: 8px; height:8px; border-radius:50%; background: var(--green-glow); }
