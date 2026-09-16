@@ -234,8 +234,6 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
   background-image: url('assets/products/simple-torsion-1.jpg');
   background-size: cover; background-position: center;
 }
-
-/* MODIFICATION: Arrière-plan plus clair, plus métallique avec reflet de brillance */
 .hero-overlay {
   position: absolute; inset: 0;
   background: 
@@ -243,7 +241,6 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
     linear-gradient(to bottom, rgba(20, 68, 47, 0.35), rgba(15, 21, 18, 0.85));
   z-index: 1;
 }
-
 .hero-grid{
   position:absolute; inset:0; z-index: 2;
   background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
@@ -310,14 +307,26 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
 }
 .scroll-hint:hover .scroll-hint-arrow::before{ border-color: var(--white); }
 
-/* ---------- Marquee ---------- */
-.marquee{ position: relative; z-index:1; margin-top: 60px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; padding: 22px 0; }
-.marquee-track{
-  display:inline-flex; gap: 40px; white-space: nowrap; animation: marquee 40s linear infinite;
-  font-family: var(--f-display); font-size: clamp(28px, 4vw, 56px); font-style: italic; color: var(--ink); font-weight: 400;
+/* ---------- Marquee (Corrigé : lignes blanches et texte en blanc) ---------- */
+.marquee{
+  position: relative; z-index:1;
+  margin-top: 60px;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+  padding: 22px 0;
 }
-.marquee-track em { color: var(--green); font-style: normal; font-size: .7em; align-self: center; opacity:.6; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track{
+  display:inline-flex; gap: 40px; white-space: nowrap;
+  animation: marquee 40s linear infinite;
+  font-family: var(--f-display); font-size: clamp(28px, 4vw, 56px);
+  font-style: italic; color: var(--white); font-weight: 400;
+}
+.marquee-track em { color: var(--accent); font-style: normal; font-size: .7em; align-self: center; opacity:.9; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 /* ---------- Stats ---------- */
 .stats{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding-top: 60px; padding-bottom: 60px; }
@@ -344,28 +353,17 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
   background-size: 60% 60%; background-repeat:no-repeat; background-position:center;
 }
 .about-visual{ position: sticky; top: 120px; }
-
-/* MODIFICATION: La carte du Logo est maintenant blanche, lumineuse et harmonieuse */
 .about-card { 
-  position: relative; 
-  background: var(--white); 
-  border: 1px solid var(--line);
-  border-radius: var(--radius); 
-  padding: 40px 30px 24px;
+  position: relative; background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 40px 30px 24px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   box-shadow: 0 30px 80px -30px rgba(0,0,0,0.15); 
 }
-.about-card img { 
-  width: 80%; max-width: 280px; height: auto; 
-  margin-bottom: 30px;
-}
-/* MODIFICATION: Le texte du bas est très visible (noir sur blanc) avec une petite ligne élégante */
+.about-card img { width: 80%; max-width: 280px; height: auto; margin-bottom: 30px; }
 .about-card-meta { 
-  width: 100%; display:flex; justify-content: space-between; 
-  color: var(--ink); 
+  width: 100%; display:flex; justify-content: space-between; color: var(--ink); 
   font-family: var(--f-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; 
-  border-top: 1px solid var(--line); padding-top: 16px;
-  opacity: .85; 
+  border-top: 1px solid var(--line); padding-top: 16px; opacity: .85; 
 }
 .about-tag{ position: relative; z-index: 2; margin-top: -30px; margin-left: auto; width: fit-content; padding: 12px 18px; background: var(--bg); border: 1px solid var(--line); border-radius: 100px; font-size: 13px; display:inline-flex; align-items:center; gap:8px; box-shadow: 0 8px 30px -10px rgba(0,0,0,.12); }
 .about-tag i{ width: 8px; height:8px; border-radius:50%; background: var(--green-glow); }
