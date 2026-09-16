@@ -17,104 +17,118 @@ document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.getElementById("preloader");
   if (preloader) {
     window.addEventListener("load", () => {
-      setTimeout(() => {
-        preloader.classList.add("is-done");
-      }, 700);
+      setTimeout(() => preloader.classList.add("is-done"), 700);
     });
-    setTimeout(() => {
-      preloader.classList.add("is-done");
-    }, 2500);
+    setTimeout(() => preloader.classList.add("is-done"), 2500);
   }
 
-  // Année dynamique dans le footer
+  // Année dynamique
   const yearSpan = document.getElementById("year");
-  if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-  }
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
   // Horloge en temps réel
   const clockEl = document.getElementById("clock");
   if (clockEl) {
     function updateClock() {
-      const now = new Date();
-      clockEl.textContent = now.toLocaleTimeString("fr-FR");
+      clockEl.textContent = new Date().toLocaleTimeString("fr-FR");
     }
     setInterval(updateClock, 1000);
     updateClock();
   }
 
-  // Gestion du curseur (Rouleau de grillage)
+  // Gestion du curseur (Rouleau)
   const cursor = document.getElementById("cursor");
   if (cursor) {
     window.addEventListener("mousemove", (e) => {
       cursor.style.left = e.clientX + "px";
       cursor.style.top = e.clientY + "px";
     });
-
-    // Effet hover sur les liens et boutons
-    const hoverElements = document.querySelectorAll("a, button, .product-card, .value-card, .contact-tile");
-    hoverElements.forEach((el) => {
+    document.querySelectorAll("a, button, .product-card, .value-card, .contact-tile, .filter-btn, .sub-filter-btn").forEach((el) => {
       el.addEventListener("mouseenter", () => cursor.classList.add("is-hover"));
       el.addEventListener("mouseleave", () => cursor.classList.remove("is-hover"));
     });
   }
 
-  // Animation des chiffres statistiques (Correction du bug à 0)
-  const statsNumbers = document.querySelectorAll("[data-count]");
-  const statsObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = +el.getAttribute("data-count");
-        let count = 0;
-        const duration = 2000; // 2 secondes
-        const increment = target / (duration / 16);
-        
-        const updateCount = () => {
-          count += increment;
-          if (count < target) {
-            el.textContent = Math.ceil(count);
-            requestAnimationFrame(updateCount);
-          } else {
-            el.textContent = target;
-          }
-        };
-        updateCount();
-        observer.unobserve(el);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  statsNumbers.forEach(num => statsObserver.observe(num));
-
-  // Barre de progression du scroll
+  // Barre de progression
   const scrollProgress = document.getElementById("scrollProgress");
   if (scrollProgress) {
     window.addEventListener("scroll", () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      scrollProgress.style.width = progress + "%";
+      scrollProgress.style.width = (window.scrollY / totalHeight) * 100 + "%";
     });
   }
 
-  // Effet d'apparition au scroll (Observer)
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  };
-
-  const observer = new IntersectionObserver((entries, observer) => {
+  // Observer pour l'apparition au scroll
+  const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-in");
-        observer.unobserve(entry.target);
+        obs.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-  document.querySelectorAll("[data-reveal], .reveal-line").forEach(el => {
-    observer.observe(el);
+  document.querySelectorAll("[data-reveal], .reveal-line").forEach(el => observer.observe(el));
+
+  // -----------------------------------------------------
+  // LOGIQUE DE FILTRAGE DU CATALOGUE PRODUITS
+  // -----------------------------------------------------
+  const catBtns = document.querySelectorAll('.filter-btn');
+  const subCatBtns = document.querySelectorAll('.sub-filter-btn');
+  const subFilterGroup = document.getElementById('subFilters');
+  const productCards = document.querySelectorAll('.product-card[data-cat]');
+
+  function applyProductFilters() {
+    const activeCatBtn = document.querySelector('.filter-btn.is-active');
+    if (!activeCatBtn) return;
+    const activeCat = activeCatBtn.getAttribute('data-cat');
+    
+    let activeSubCat = null;
+    
+    // Gérer l'affichage des sous-catégories
+    if (activeCat === 'grillages') {
+      if(subFilterGroup) subFilterGroup.classList.remove('is-hidden');
+      const activeSubBtn = document.querySelector('.sub-filter-btn.is-active');
+      if (activeSubBtn) activeSubCat = activeSubBtn.getAttribute('data-subcat');
+    } else {
+      if(subFilterGroup) subFilterGroup.classList.add('is-hidden');
+    }
+
+    // Afficher/Cacher les cartes
+    productCards.forEach(card => {
+      const cardCat = card.getAttribute('data-cat');
+      const cardSubcat = card.getAttribute('data-subcat');
+
+      if (activeCat === 'accessoires' && cardCat === 'accessoires') {
+        card.style.display = 'flex';
+      } else if (activeCat === 'grillages' && cardCat === 'grillages' && cardSubcat === activeSubCat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Écouteurs sur les boutons principaux
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      applyProductFilters();
+    });
   });
+
+  // Écouteurs sur les sous-boutons
+  subCatBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      subCatBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      applyProductFilters();
+    });
+  });
+
+  // Initialisation au chargement
+  if (catBtns.length > 0) applyProductFilters();
 });
 
 // Fonctions globales pour les modales de prix
@@ -125,7 +139,6 @@ function ouvrirModale(id) {
     document.body.style.overflow = "hidden";
   }
 }
-
 function fermerModale(id) {
   const modale = document.getElementById(id);
   if (modale) {
@@ -133,8 +146,6 @@ function fermerModale(id) {
     document.body.style.overflow = "auto";
   }
 }
-
-// Fermer la modale si on clique en dehors du contenu
 window.addEventListener("click", (event) => {
   if (event.target.classList.contains("modale")) {
     event.target.classList.remove("is-open");
