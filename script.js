@@ -213,3 +213,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+// -----------------------------------------------------
+// CARROUSEL D'IMAGES DANS LES CARTES PRODUITS
+// -----------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const carousels = document.querySelectorAll('.pc-media');
+
+  carousels.forEach(carousel => {
+    const container = carousel.querySelector('.carousel-container');
+    if (!container) return;
+    const slides = container.querySelectorAll('.carousel-slide');
+    const dots = carousel.querySelectorAll('.carousel-dot');
+    const prevBtn = carousel.querySelector('.carousel-prev');
+    const nextBtn = carousel.querySelector('.carousel-next');
+    let currentIndex = 0;
+
+    function updateCarousel(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+      container.scrollTo({
+        left: slides[currentIndex].offsetLeft,
+        behavior: 'smooth'
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        updateCarousel(currentIndex + 1);
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        updateCarousel(currentIndex - 1);
+      });
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        updateCarousel(i);
+      });
+    });
+
+    // Mettre à jour les points lors d'un défilement manuel (swipe tactile)
+    container.addEventListener('scroll', () => {
+      const index = Math.round(container.scrollLeft / container.clientWidth);
+      if (index !== currentIndex && index >= 0 && index < slides.length) {
+        currentIndex = index;
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentIndex);
+        });
+      }
+    });
+  });
+});
+
