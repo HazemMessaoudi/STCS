@@ -4,11 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>STCS — Clôture & Sécurité</title>
-<meta name="description" content="STCS — La Société Tunisienne de Clôture & Sécurité. Grillage, fil galvanisé, fil barbelé, panneaux rigides et solutions de sécurité en Tunisie." />
-
+<meta name="description" content="STCS — La Société Tunisienne de Clôture & Sécurité. Grillage, fil galvanisé, fil barbelé et solutions de sécurité en Tunisie." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
 <link rel="icon" type="image/jpeg" href="assets/brand/logo.jpg" />
 </head>
@@ -39,8 +38,7 @@
     <a href="#about"><span>01</span> À propos</a>
     <a href="#products"><span>02</span> Produits</a>
     <a href="#values"><span>03</span> Pourquoi nous</a>
-    <a href="#offer"><span>04</span> Offre</a>
-    <a href="#contact"><span>05</span> Contact</a>
+    <a href="#contact"><span>04</span> Contact</a>
   </nav>
   <div class="nav-actions">
     <div class="lang-switcher">
@@ -77,7 +75,7 @@
         <img src="assets/brand/logo.jpg" alt="STCS logo" class="hero-logo" />
         <div>
           <p class="hero-kicker">STCS · Société Tunisienne de Clôture &amp; Sécurité</p>
-          <p class="hero-sub">Fabricant et distributeur de fils, grillages, et accessoires de sécurité. Conçus pour les fermes, usines, routes et maisons à travers la Tunisie.</p>
+          <p class="hero-sub">Fabricant et distributeur de fils, grillages, et accessoires de sécurité à travers la Tunisie.</p>
         </div>
       </div>
       <a href="#products" class="scroll-hint">
@@ -92,36 +90,6 @@
     <div class="stat"><span class="stat-num">5</span><span class="plus">+</span><p>Années d'expérience</p></div>
     <div class="stat"><span class="stat-num">100</span><span class="plus">+</span><p>Projets livrés</p></div>
     <div class="stat"><span class="stat-num">100</span><span class="plus">%</span><p>Qualité Tunisienne</p></div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="section-head">
-      <span class="eyebrow">01 — À propos de STCS</span>
-      <h2 class="section-title">
-        <span class="reveal-line">Périmètres protégés.</span>
-        <span class="reveal-line"><em>Normes dépassées.</em></span>
-      </h2>
-    </div>
-    <div class="about-grid">
-      <div class="about-copy">
-        <p class="lead">STCS — <strong>Société Tunisienne de Clôture &amp; Sécurité</strong> — fournit des produits de clôture et de protection de haute qualité à travers la Tunisie. Qu'il s'agisse de fil galvanisé vendu au poids ou de grillage robuste, chaque produit est conçu pour résister à la corrosion, à la tension et à l'épreuve du temps.</p>
-        <ul class="checklist">
-          <li>Acier galvanisé à chaud, jusqu'à 4.9 mm d'épaisseur</li>
-          <li>Grillages simple et double torsion de haute durabilité</li>
-          <li>Prix de gros pour les professionnels et installateurs</li>
-          <li>Livraison rapide sur toute la république dans la semaine</li>
-        </ul>
-      </div>
-      <div class="about-visual">
-        <div class="about-card">
-          <div class="about-card-frame">
-            <img src="assets/brand/logo.jpg" alt="STCS emblem" />
-          </div>
-          <div class="about-card-meta"><span>EST. TUNISIE</span><span>Clôture &amp; Sécurité</span></div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- PRODUCTS & FILTERS -->
@@ -147,9 +115,22 @@
 
     <div class="product-grid" id="productGrid">
 
-      <!-- 1. Grillage Simple Torsion -->
+      <!-- 1. Grillage Simple Torsion (Carrousel avec tes photos) -->
       <article class="product-card" data-cat="grillages" data-subcat="simple">
-        <div class="pc-media"><img src="assets/products/simple%20torsion.jpg" alt="Grillage Simple Torsion" loading="lazy" /></div>
+        <div class="pc-media">
+          <div class="carousel-container">
+            <div class="carousel-slide"><img src="assets/products/simple%20torsion.jpg" alt="Simple Torsion 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/simple%20torsion1.jpg" alt="Simple Torsion 2" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/simple%20torsion2.jpg" alt="Simple Torsion 3" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn carousel-prev">&#10094;</button>
+          <button class="carousel-btn carousel-next">&#10095;</button>
+          <div class="carousel-dots">
+            <button class="carousel-dot active"></button>
+            <button class="carousel-dot"></button>
+            <button class="carousel-dot"></button>
+          </div>
+        </div>
         <div class="pc-body">
           <div>
             <span class="pc-cat">Catégorie : Simple Torsion</span>
@@ -162,9 +143,22 @@
         </div>
       </article>
 
-      <!-- 2. Grillage Double Torsion -->
+      <!-- 2. Grillage Double Torsion (Carrousel avec tes photos) -->
       <article class="product-card" data-cat="grillages" data-subcat="double" style="display:none;">
-        <div class="pc-media"><img src="assets/products/double%20torsion.jpg" alt="Grillage Double Torsion" loading="lazy" /></div>
+        <div class="pc-media">
+          <div class="carousel-container">
+            <div class="carousel-slide"><img src="assets/products/double%20torsion.jpg" alt="Double Torsion 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/double%20torsion1.jpg" alt="Double Torsion 2" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/double%20torsion2.png" alt="Double Torsion 3" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn carousel-prev">&#10094;</button>
+          <button class="carousel-btn carousel-next">&#10095;</button>
+          <div class="carousel-dots">
+            <button class="carousel-dot active"></button>
+            <button class="carousel-dot"></button>
+            <button class="carousel-dot"></button>
+          </div>
+        </div>
         <div class="pc-body">
           <div>
             <span class="pc-cat">Catégorie : Double Torsion</span>
@@ -177,9 +171,20 @@
         </div>
       </article>
 
-      <!-- 3. Fil Barbelé -->
+      <!-- 3. Fil Barbelé (Accessoire) -->
       <article class="product-card" data-cat="accessoires" style="display:none;">
-        <div class="pc-media"><img src="assets/products/fil-barbele-1.jpg" alt="Fil Barbelé" loading="lazy" /></div>
+        <div class="pc-media">
+          <div class="carousel-container">
+            <div class="carousel-slide"><img src="assets/products/fil-barbele-1.jpg" alt="Fil Barbelé 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/fil-barbele-2.jpg" alt="Fil Barbelé 2" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn carousel-prev">&#10094;</button>
+          <button class="carousel-btn carousel-next">&#10095;</button>
+          <div class="carousel-dots">
+            <button class="carousel-dot active"></button>
+            <button class="carousel-dot"></button>
+          </div>
+        </div>
         <div class="pc-body">
           <div>
             <span class="pc-cat">Catégorie : Accessoires</span>
@@ -192,9 +197,22 @@
         </div>
       </article>
 
-      <!-- 4. Fil Galvanisé -->
+      <!-- 4. Fil Galvanisé (Accessoire) -->
       <article class="product-card" data-cat="accessoires" style="display:none;">
-        <div class="pc-media"><img src="assets/products/fil-galvanise-1.jpg" alt="Fil Galvanisé" loading="lazy" /></div>
+        <div class="pc-media">
+          <div class="carousel-container">
+            <div class="carousel-slide"><img src="assets/products/fil-galvanise-1.jpg" alt="Fil Galvanisé 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/fil-galvanise-2.jpg" alt="Fil Galvanisé 2" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/fil-galvanise-3.jpg" alt="Fil Galvanisé 3" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn carousel-prev">&#10094;</button>
+          <button class="carousel-btn carousel-next">&#10095;</button>
+          <div class="carousel-dots">
+            <button class="carousel-dot active"></button>
+            <button class="carousel-dot"></button>
+            <button class="carousel-dot"></button>
+          </div>
+        </div>
         <div class="pc-body">
           <div>
             <span class="pc-cat">Catégorie : Accessoires</span>
@@ -207,23 +225,6 @@
         </div>
       </article>
 
-    </div>
-  </section>
-
-  <!-- VALUES -->
-  <section class="values" id="values">
-    <div class="section-head">
-      <span class="eyebrow">03 — Pourquoi choisir STCS</span>
-      <h2 class="section-title">
-        <span class="reveal-line">Conçu pour durer.</span>
-        <span class="reveal-line"><em>Des prix compétitifs.</em></span>
-      </h2>
-    </div>
-    <div class="value-grid">
-      <div class="value-card"><span class="v-num">01</span><h4>Anti-corrosion</h4><p>Finition galvanisée à chaud conçue pour résister à l'humidité côtière, à la pluie et à la salinité du sol.</p></div>
-      <div class="value-card"><span class="v-num">02</span><h4>Testé sous tension</h4><p>Haute résistance à la traction pour garantir un périmètre qui ne s'affaisse pas dans le temps.</p></div>
-      <div class="value-card"><span class="v-num">03</span><h4>Livraison rapide</h4><p>Grâce à notre stock régional, les commandes sont expédiées dans la semaine, partout en Tunisie.</p></div>
-      <div class="value-card"><span class="v-num">04</span><h4>Prix équitables</h4><p>Des tarifs directs d'usine, avec des remises quantitatives pour les installateurs et professionnels.</p></div>
     </div>
   </section>
 
@@ -241,16 +242,12 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-top">
-      <h3 class="footer-mark">STCS.</h3>
-    </div>
-    <div class="footer-bottom">
-      <span>© <span id="year"></span> STCS — Société Tunisienne de Clôture &amp; Sécurité.</span>
-    </div>
+    <div class="footer-top"><h3 class="footer-mark">STCS.</h3></div>
+    <div class="footer-bottom"><span>© <span id="year"></span> STCS — Société Tunisienne de Clôture &amp; Sécurité.</span></div>
   </footer>
 </main>
 
-<!-- MODALES DU CATALOGUE DE PRIX -->
+<!-- MODALES -->
 <div id="modale-st" class="modale">
   <div class="modale-contenu">
     <span class="modale-fermer" onclick="fermerModale('modale-st')">&times;</span>
@@ -300,11 +297,7 @@
   </div>
 </div>
 
-<!-- SOCIAL BUTTONS -->
 <div class="social-float">
-  <a href="mailto:stcs@stcs.tn" class="social-btn social-btn--mail">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-  </a>
   <a href="https://wa.me/21628545844" class="social-btn social-btn--wa">
     <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
   </a>
