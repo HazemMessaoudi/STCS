@@ -328,64 +328,53 @@
 </div>
 
 <!-- MODALES -->
-<div id="modale-st" class="modale">
-  <div class="modale-contenu">
-    <span class="modale-fermer" onclick="fermerModale('modale-st')">&times;</span>
-    <div class="modale-header"><h3>شباك بسيط الفتل (Simple Torsion)</h3></div>
-    <ul class="modale-liste">
-      <li><span class="mod-desc">الارتفاع: 1,5 م • الطول: 25 م • السماكة: 2,0 مم</span> <span class="mod-price">210 د.ت / لفة</span></li>
-      <li><span class="mod-desc">الارتفاع: 1,5 م • الطول: 25 م • السماكة: 2,2 مم</span> <span class="mod-price">250 د.ت / لفة</span></li>
-      <li><span class="mod-desc">الارتفاع: 2,0 م • الطول: 25 م • السماكة: 2,0 مم</span> <span class="mod-price">250 د.ت / لفة</span></li>
-      <li><span class="mod-desc">الارتفاع: 2,0 م • الطول: 25 م • السماكة: 2,2 مم</span> <span class="mod-price">270 د.ت / لفة</span></li>
-    </ul>
-  </div>
-</div>
+<div id="modale-devis" class="modale">
+  <div class="modale-contenu" style="max-width: 550px;">
+    <span class="modale-fermer" onclick="fermerModale('modale-devis')">&times;</span>
+    <div class="modale-header">
+      <h3>حاسبة التسعيرة</h3>
+    </div>
+    
+    <!-- Zone d'ajout d'article -->
+    <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 20px; border-bottom: 2px solid var(--line);">
+      <div>
+        <label for="devis-produit" style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; display: block;">1. اختر المنتج</label>
+        <select id="devis-produit" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
+          <option value="st-20" data-longueur="25" data-prix="210" data-unite="لفة">شباك بسيط الفتل - 210 د.ت</option>
+          <option value="dt-16" data-longueur="50" data-prix="320" data-unite="لفة">شباك مزدوج الفتل - 320 د.ت</option>
+          <option value="gr-15" data-longueur="2.5" data-prix="140" data-unite="لوح">شباك صلب ارتفاع 1.5م - 140 د.ت</option>
+          <option value="fb-16" data-longueur="200" data-prix="60" data-unite="لفة">سلك شائك 1.6مم - 60 د.ت</option>
+        </select>
+      </div>
 
-<div id="modale-dt" class="modale">
-  <div class="modale-contenu">
-    <span class="modale-fermer" onclick="fermerModale('modale-dt')">&times;</span>
-    <div class="modale-header"><h3>شباك مزدوج الفتل (Double Torsion)</h3></div>
-    <ul class="modale-liste">
-      <li><span class="mod-desc">الارتفاع: 2,0 م • الطول: 50 م • السماكة: 1,6 مم</span> <span class="mod-price">320 د.ت / لفة</span></li>
-      <li><span class="mod-desc">الارتفاع: 1,5 م • الطول: 50 م • السماكة: 1,6 مم</span> <span class="mod-price">220 د.ت / لفة</span></li>
-      <li><span class="mod-desc">شباك مزدوج الفتل G.M <br> الارتفاع: 2,0 م • الطول: 20 م • السماكة: 2,0 مم</span> <span class="mod-price">135 د.ت / لفة</span></li>
-      <li><span class="mod-desc">شباك مزدوج الفتل G.M <br> الارتفاع: 1,5 م • الطول: 20 م • السماكة: 2,0 مم</span> <span class="mod-price">120 د.ت / لفة</span></li>
-    </ul>
-  </div>
-</div>
+      <div>
+        <label for="devis-longueur" style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; display: block;">2. طول المحيط المراد تسييجه (بالمتر الطولي)</label>
+        <input type="number" id="devis-longueur" placeholder="مثال: 580" min="1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
+      </div>
 
-<!-- NOUVELLE MODALE : PANNEAUX RIGIDES (AR) -->
-<div id="modale-gr" class="modale">
-  <div class="modale-contenu">
-    <span class="modale-fermer" onclick="fermerModale('modale-gr')">&times;</span>
-    <div class="modale-header"><h3>ألواح سياج صلبة (Panneaux Rigides)</h3></div>
-    <ul class="modale-liste">
-      <li><span class="mod-desc">الارتفاع: 1,5 م • الطول: 2,5 م • السماكة: 4 مم</span> <span class="mod-price">140 د.ت / لوح</span></li>
-      <li><span class="mod-desc">الارتفاع: 2,0 م • الطول: 2,5 م • السماكة: 4 مم</span> <span class="mod-price">160 د.ت / لوح</span></li>
-    </ul>
-  </div>
-</div>
+      <button onclick="ajouterArticleDevis()" style="background: var(--bg-2); color: var(--ink); border: 1px solid var(--line); padding: 12px; border-radius: 100px; font-weight: 700; font-size: 15px; cursor: pointer; transition: background 0.3s; font-family: var(--f-sans);">
+        + إضافة هذا المنتج
+      </button>
+    </div>
 
-<div id="modale-fb" class="modale">
-  <div class="modale-contenu">
-    <span class="modale-fermer" onclick="fermerModale('modale-fb')">&times;</span>
-    <div class="modale-header"><h3>سلك شائك (إكسسوارات)</h3></div>
-    <ul class="modale-liste">
-      <li><span class="mod-desc">الطول: 200 م • السماكة: 1,6 مم</span> <span class="mod-price">60 د.ت / لفة</span></li>
-      <li><span class="mod-desc">الطول: 200 م • السماكة: 1,8 مم</span> <span class="mod-price">80 د.ت / لفة</span></li>
-    </ul>
-  </div>
-</div>
+    <!-- Zone Panier (Cachée par défaut) -->
+    <div id="zone-panier" style="display: none; padding-top: 20px;">
+      <h4 style="margin: 0 0 16px; font-family: var(--f-display); color: var(--ink); font-size: 20px; font-weight: 700;">تفاصيل طلبك</h4>
+      
+      <ul id="panier-liste" style="list-style: none; padding: 0; margin: 0 0 20px; max-height: 250px; overflow-y: auto;">
+        <!-- Les articles s'ajouteront ici en JavaScript -->
+      </ul>
 
-<div id="modale-fg" class="modale">
-  <div class="modale-contenu">
-    <span class="modale-fermer" onclick="fermerModale('modale-fg')">&times;</span>
-    <div class="modale-header"><h3>سلك مجلفن (إكسسوارات)</h3></div>
-    <ul class="modale-liste">
-      <li><span class="mod-desc">السماكة: 1,3 مم</span> <span class="mod-price">6.5 د.ت / كغ</span></li>
-      <li><span class="mod-desc">السماكة: 2,7 مم</span> <span class="mod-price">6 د.ت / كغ</span></li>
-      <li><span class="mod-desc">السماكة: 4,9 مم</span> <span class="mod-price">5 د.ت / كغ</span></li>
-    </ul>
+      <div style="background: var(--bg-2); padding: 16px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <span style="font-weight: 700; color: var(--ink-2);">المجموع التقديري :</span>
+        <strong id="panier-total-prix" style="font-size: 22px; color: var(--ink);" dir="ltr">0.00 DT</strong>
+      </div>
+
+      <button onclick="finaliserDemandeDevis()" style="width: 100%; background: var(--green); color: var(--white); padding: 16px; border-radius: 100px; font-weight: 700; font-size: 16px; cursor: pointer; border: none; transition: background 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: var(--f-sans);">
+        إرسال طلب التسعيرة النهائي
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>
+      </button>
+    </div>
   </div>
 </div>
 
