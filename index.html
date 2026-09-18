@@ -45,10 +45,10 @@
       <span class="separator">/</span>
       <a href="index-ar.html">AR</a>
     </div>
-    <a href="#contact" class="nav-cta">
-      <span>Demander un devis</span>
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-    </a>
+   <a href="javascript:void(0)" onclick="ouvrirModale('modale-devis')" class="nav-cta">
+  <span>Demander un devis</span>
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+</a>
   </div>
 </header>
 
@@ -397,5 +397,40 @@
 
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="script.js"></script>
+  <div id="modale-devis" class="modale">
+  <div class="modale-contenu" style="max-width: 500px;">
+    <span class="modale-fermer" onclick="fermerModale('modale-devis')">&times;</span>
+    <div class="modale-header">
+      <h3>Calculateur de Devis</h3>
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div>
+        <label for="devis-produit" style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; display: block;">1. Choisissez votre produit</label>
+        <select id="devis-produit" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
+          <!-- Données basées sur le catalogue STCS -->
+          <option value="st-20" data-longueur="25" data-prix="210" data-unite="rouleaux">Grillage Simple Torsion (Rouleau 25m) - 210 DT</option>
+          <option value="dt-16" data-longueur="50" data-prix="320" data-unite="rouleaux">Grillage Double Torsion (Rouleau 50m) - 320 DT</option>
+          <option value="gr-15" data-longueur="2.5" data-prix="140" data-unite="panneaux">Panneau Rigide H:1,5m (Panneau 2,5m) - 140 DT</option>
+          <option value="fb-16" data-longueur="200" data-prix="60" data-unite="rouleaux">Fil Barbelé 1,6mm (Rouleau 200m) - 60 DT</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="devis-longueur" style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; display: block;">2. Périmètre à clôturer (en mètres linéaires)</label>
+        <input type="number" id="devis-longueur" placeholder="Ex: 580" min="1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
+      </div>
+
+      <button onclick="calculerDevis()" style="background: var(--ink); color: var(--bg); padding: 14px; border-radius: 100px; font-weight: 600; font-size: 15px; margin-top: 8px; cursor: pointer; border: none; transition: background 0.3s;">
+        Calculer le besoin
+      </button>
+
+      <div id="devis-resultat" style="display: none; background: var(--bg-2); padding: 20px; border-radius: 12px; margin-top: 10px; border: 1px solid var(--line);">
+        <p style="margin: 0 0 8px; font-size: 15px; color: var(--ink-2);">Quantité nécessaire : <strong id="res-qte" style="color: var(--green); font-size: 18px;"></strong></p>
+        <p style="margin: 0; font-size: 15px; color: var(--ink-2);">Prix total estimé : <strong id="res-prix" style="color: var(--ink); font-size: 18px;"></strong></p>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
