@@ -85,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let activeSubCat = null;
     
-    // Gérer l'affichage des sous-catégories
     if (activeCat === 'grillages') {
       if(subFilterGroup) subFilterGroup.classList.remove('is-hidden');
       const activeSubBtn = document.querySelector('.sub-filter-btn.is-active');
@@ -94,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if(subFilterGroup) subFilterGroup.classList.add('is-hidden');
     }
 
-    // Afficher/Cacher les cartes
     productCards.forEach(card => {
       const cardCat = card.getAttribute('data-cat');
       const cardSubcat = card.getAttribute('data-subcat');
@@ -206,7 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Fonction de défilement automatique
     function scrollGallery() {
       if (isRTL) {
         if (Math.abs(galleryTrack.scrollLeft) >= galleryTrack.scrollWidth - galleryTrack.clientWidth - 10) {
@@ -294,7 +291,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Fonctions globales pour les modales de prix
+// -----------------------------------------------------
+// GESTION DES MODALES
+// -----------------------------------------------------
 function ouvrirModale(id) {
   const modale = document.getElementById(id);
   if (modale) {
@@ -302,6 +301,7 @@ function ouvrirModale(id) {
     document.body.style.overflow = "hidden";
   }
 }
+
 function fermerModale(id) {
   const modale = document.getElementById(id);
   if (modale) {
@@ -309,42 +309,134 @@ function fermerModale(id) {
     document.body.style.overflow = "auto";
   }
 }
+
 window.addEventListener("click", (event) => {
   if (event.target.classList.contains("modale")) {
     event.target.classList.remove("is-open");
     document.body.style.overflow = "auto";
   }
 });
-function calculerDevis() {
+
+// -----------------------------------------------------
+// GESTION DU PANIER DE DEVIS (MULTI-ARTICLES)
+// -----------------------------------------------------
+let panierDevis = [];
+
+function ajouterArticleDevis() {
   const select = document.getElementById('devis-produit');
   const input = document.getElementById('devis-longueur');
-  const resultatDiv = document.getElementById('devis-resultat');
-  const resQte = document.getElementById('res-qte');
-  const resPrix = document.getElementById('res-prix');
+  const longueur = parseFloat(input.value);
 
-  const longueurACloturer = parseFloat(input.value);
+  const isAR = document.documentElement.dir === 'rtl';
 
-  // Vérification de la saisie
-  if (isNaN(longueurACloturer) || longueurACloturer <= 0) {
-    alert("Veuillez saisir une longueur valide en mètres.");
+  if (isNaN(longueur) || longueur <= 0) {
+    alert(isAR ? "الرجاء إدخال طول صحيح بالمتر." : "Veuillez saisir une longueur valide en mètres.");
     return;
   }
 
-  // Récupération des attributs de l'option sélectionnée
-  const optionSelectionnee = select.options[select.selectedIndex];
-  const longueurProduit = parseFloat(optionSelectionnee.getAttribute('data-longueur'));
-  const prixUnitaire = parseFloat(optionSelectionnee.getAttribute('data-prix'));
-  const nomUnite = optionSelectionnee.getAttribute('data-unite');
+  const option = select.options[select.selectedIndex];
+  // Récupérer le nom du produit sans le prix
+  const nomProduit = option.text.split(' - ')[0]; 
+  const longueurProduit = parseFloat(option.getAttribute('data-longueur'));
+  const prixUnitaire = parseFloat(option.getAttribute('data-prix'));
+  const nomUnite = option.getAttribute('data-unite');
 
-  // Calcul mathématique : Arrondi à l'entier supérieur (ex: 23.2 devient 24)
-  const quantiteRequise = Math.ceil(longueurACloturer / longueurProduit);
-  
-  // Calcul du prix total
-  const prixTotal = quantiteRequise * prixUnitaire;
+  // Application de la règle : Arrondi à l'entier supérieur
+  const quantite = Math.ceil(longueur / longueurProduit);
+  const prixTotal = quantite * prixUnitaire;
 
-  // Affichage des résultats
-  resQte.textContent = quantiteRequise + " " + nomUnite;
-  resPrix.textContent = prixTotal.toFixed(2) + " DT";
+  // Ajout au panier
+  panierDevis.push({
+    nom: nomProduit,
+    longueur: longueur,
+    quantite: quantite,
+    unite: nomUnite,
+    prixUnitaire: prixUnitaire,
+    prixTotal: prixTotal
+  });
+
+  // Vider le champ de saisie
+  input.value = '';
   
-  resultatDiv.style.display = "block";
+  // Mettre à jour l'interface
+  afficherPanier();
+}
+
+function afficherPanier() {
+  const liste = document.getElementById('panier-liste');
+  const totalPrix = document.getElementById('panier-total-prix');
+  const zonePanier = document.getElementById('zone-panier');
+  
+  liste.innerHTML = '';
+  let total = 0;
+  const isAR = document.documentElement.dir === 'rtl';
+
+  panierDevis.forEach((article, index) => {
+    total += article.prixTotal;
+    
+    const li = document.createElement('li');
+    li.style.cssText = "padding: 12px 0; border-bottom: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px;";
+    
+    // Création des détails de l'article
+    const details = document.createElement('div');
+    details.innerHTML = `
+      <strong style="display:block; color:var(--ink); font-size:15px; margin-bottom:4px;">${article.nom}</strong>
+      <span style="font-size:13px; color:var(--mute);">${isAR ? 'المحيط:' : 'Périmètre:'} ${article.longueur}m &rarr; <b>${article.quantite} ${article.unite}</b></span>
+    `;
+    
+    // Création du prix et du bouton de suppression
+    const actionPrix = document.createElement('div');
+    actionPrix.style.cssText = "display: flex; align-items: center; gap: 16px;";
+    actionPrix.innerHTML = `
+      <strong style="color:var(--green); font-family:var(--f-display); font-size:16px;" dir="ltr">${article.prixTotal.toFixed(2)} DT</strong>
+      <button onclick="supprimerArticle(${index})" style="background:rgba(255,0,0,0.08); color:red; border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:background 0.3s;" title="Supprimer">&times;</button>
+    `;
+    
+    li.appendChild(details);
+    li.appendChild(actionPrix);
+    liste.appendChild(li);
+  });
+
+  totalPrix.textContent = total.toFixed(2) + " DT";
+
+  // Afficher ou cacher la zone du panier selon son contenu
+  if (panierDevis.length > 0) {
+    zonePanier.style.display = 'block';
+  } else {
+    zonePanier.style.display = 'none';
+  }
+}
+
+function supprimerArticle(index) {
+  panierDevis.splice(index, 1);
+  afficherPanier();
+}
+
+// Fonction finale appelée lors du clic sur "Demander un devis final"
+function finaliserDemandeDevis() {
+  if (panierDevis.length === 0) return;
+  
+  const isAR = document.documentElement.dir === 'rtl';
+  let message = isAR 
+    ? "مرحباً STCS، أود طلب تسعيرة للمنتجات التالية:\n\n" 
+    : "Bonjour STCS, je souhaite un devis pour :\n\n";
+    
+  let total = 0;
+  
+  panierDevis.forEach(article => {
+    if (isAR) {
+      message += `- ${article.nom} (المحيط: ${article.longueur}م) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
+    } else {
+      message += `- ${article.nom} (Périmètre: ${article.longueur}m) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
+    }
+    total += article.prixTotal;
+  });
+  
+  message += isAR 
+    ? `\nالمجموع التقديري : ${total.toFixed(2)} DT`
+    : `\nTotal estimé : ${total.toFixed(2)} DT`;
+    
+  // Ouvre WhatsApp avec le devis complet formaté
+  const waUrl = `https://wa.me/21628545844?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank');
 }
