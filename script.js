@@ -36,19 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateClock();
   }
 
-  // Gestion du curseur
-  const cursor = document.getElementById("cursor");
-  if (cursor) {
-    window.addEventListener("mousemove", (e) => {
-      cursor.style.left = e.clientX + "px";
-      cursor.style.top = e.clientY + "px";
-    });
-    document.querySelectorAll("a, button, .product-card, .value-card, .contact-tile, .filter-btn, .sub-filter-btn, .gallery-item").forEach((el) => {
-      el.addEventListener("mouseenter", () => cursor.classList.add("is-hover"));
-      el.addEventListener("mouseleave", () => cursor.classList.remove("is-hover"));
-    });
-  }
-
   // Barre de progression
   const scrollProgress = document.getElementById("scrollProgress");
   if (scrollProgress) {
