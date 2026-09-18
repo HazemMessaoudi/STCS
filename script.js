@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cursor.style.left = e.clientX + "px";
       cursor.style.top = e.clientY + "px";
     });
-    document.querySelectorAll("a, button, .product-card, .value-card, .contact-tile, .filter-btn, .sub-filter-btn").forEach((el) => {
+    document.querySelectorAll("a, button, .product-card, .value-card, .contact-tile, .filter-btn, .sub-filter-btn, .gallery-item").forEach((el) => {
       el.addEventListener("mouseenter", () => cursor.classList.add("is-hover"));
       el.addEventListener("mouseleave", () => cursor.classList.remove("is-hover"));
     });
@@ -109,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Écouteurs sur les boutons principaux
   catBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       catBtns.forEach(b => b.classList.remove('is-active'));
@@ -118,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Écouteurs sur les sous-boutons
   subCatBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       subCatBtns.forEach(b => b.classList.remove('is-active'));
@@ -127,38 +125,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Initialisation au chargement
   if (catBtns.length > 0) applyProductFilters();
-});
 
-// Fonctions globales pour les modales de prix
-function ouvrirModale(id) {
-  const modale = document.getElementById(id);
-  if (modale) {
-    modale.classList.add("is-open");
-    document.body.style.overflow = "hidden";
-  }
-}
-function fermerModale(id) {
-  const modale = document.getElementById(id);
-  if (modale) {
-    modale.classList.remove("is-open");
-    document.body.style.overflow = "auto";
-  }
-}
-window.addEventListener("click", (event) => {
-  if (event.target.classList.contains("modale")) {
-    event.target.classList.remove("is-open");
-    document.body.style.overflow = "auto";
-  }
-});
-
-// -----------------------------------------------------
-// CARROUSEL D'IMAGES DANS LES CARTES PRODUITS
-// -----------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
+  // -----------------------------------------------------
+  // CARROUSEL D'IMAGES DANS LES CARTES PRODUITS
+  // -----------------------------------------------------
   const carousels = document.querySelectorAll('.pc-media');
-
   carousels.forEach(carousel => {
     const container = carousel.querySelector('.carousel-container');
     if (!container) return;
@@ -202,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Mettre à jour les points lors d'un défilement manuel (swipe tactile)
     container.addEventListener('scroll', () => {
       const index = Math.round(container.scrollLeft / container.clientWidth);
       if (index !== currentIndex && index >= 0 && index < slides.length) {
@@ -213,73 +184,134 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-});
 
-// -----------------------------------------------------
-// LIGHTBOX (AGRANDISSEMENT DES IMAGES DE LA GALERIE)
-// -----------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
+  // -----------------------------------------------------
+  // SLIDER GALERIE (Défilement automatique et flèches)
+  // -----------------------------------------------------
+  const galleryTrack = document.getElementById('galleryTrack');
+  if (galleryTrack) {
+    const prevArrow = document.querySelector('.gallery-prev');
+    const nextArrow = document.querySelector('.gallery-next');
+    const scrollAmount = 324; // 300px + 24px gap
+    const isRTL = document.documentElement.dir === 'rtl';
+    
+    if (nextArrow) {
+      nextArrow.addEventListener('click', () => {
+        galleryTrack.scrollBy({ left: isRTL ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+      });
+    }
+    if (prevArrow) {
+      prevArrow.addEventListener('click', () => {
+        galleryTrack.scrollBy({ left: isRTL ? scrollAmount : -scrollAmount, behavior: 'smooth' });
+      });
+    }
+
+    // Fonction de défilement automatique
+    function scrollGallery() {
+      if (isRTL) {
+        if (Math.abs(galleryTrack.scrollLeft) >= galleryTrack.scrollWidth - galleryTrack.clientWidth - 10) {
+          galleryTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          galleryTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+      } else {
+        if (galleryTrack.scrollLeft >= galleryTrack.scrollWidth - galleryTrack.clientWidth - 10) {
+          galleryTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          galleryTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+      }
+    }
+
+    let autoScroll = setInterval(scrollGallery, 3500);
+
+    const galleryWrapper = document.querySelector('.gallery-slider-wrapper');
+    if (galleryWrapper) {
+      galleryWrapper.addEventListener('mouseenter', () => clearInterval(autoScroll));
+      galleryWrapper.addEventListener('mouseleave', () => {
+        autoScroll = setInterval(scrollGallery, 3500);
+      });
+    }
+  }
+
+  // -----------------------------------------------------
+  // LIGHTBOX (AGRANDISSEMENT DES IMAGES DE LA GALERIE)
+  // -----------------------------------------------------
   const galleryItems = document.querySelectorAll('.gallery-item img');
   const lightbox = document.getElementById('lightbox');
   
-  if (!lightbox || galleryItems.length === 0) return;
+  if (lightbox && galleryItems.length > 0) {
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+    let currentIndex = 0;
 
-  const lightboxImg = document.getElementById('lightbox-img');
-  const closeBtn = document.querySelector('.lightbox-close');
-  const prevBtn = document.querySelector('.lightbox-prev');
-  const nextBtn = document.querySelector('.lightbox-next');
-  
-  let currentIndex = 0;
-
-  // Ouvrir la lightbox au clic sur une image
-  galleryItems.forEach((img, index) => {
-    img.parentElement.addEventListener('click', () => {
-      currentIndex = index;
-      showImage(currentIndex);
-      lightbox.classList.add('is-active');
-      document.body.style.overflow = "hidden"; // Bloque le scroll du site
+    galleryItems.forEach((img, index) => {
+      img.parentElement.addEventListener('click', () => {
+        currentIndex = index;
+        showImage(currentIndex);
+        lightbox.classList.add('is-active');
+        document.body.style.overflow = "hidden";
+      });
     });
-  });
 
-  // Fonction pour afficher l'image correspondante
-  function showImage(index) {
-    if (index >= galleryItems.length) currentIndex = 0; // Boucle à la première
-    if (index < 0) currentIndex = galleryItems.length - 1; // Boucle à la dernière
-    lightboxImg.src = galleryItems[currentIndex].src;
+    function showImage(index) {
+      if (index >= galleryItems.length) currentIndex = 0;
+      if (index < 0) currentIndex = galleryItems.length - 1;
+      lightboxImg.src = galleryItems[currentIndex].src;
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-active');
+      document.body.style.overflow = "auto";
+    }
+
+    closeBtn.addEventListener('click', closeLightbox);
+    
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex++;
+      showImage(currentIndex);
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex--;
+      showImage(currentIndex);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('is-active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') { currentIndex++; showImage(currentIndex); }
+      if (e.key === 'ArrowLeft') { currentIndex--; showImage(currentIndex); }
+    });
   }
+});
 
-  // Fermer la lightbox
-  function closeLightbox() {
-    lightbox.classList.remove('is-active');
-    document.body.style.overflow = "auto"; // Réactive le scroll
+// Fonctions globales pour les modales de prix
+function ouvrirModale(id) {
+  const modale = document.getElementById(id);
+  if (modale) {
+    modale.classList.add("is-open");
+    document.body.style.overflow = "hidden";
   }
-
-  closeBtn.addEventListener('click', closeLightbox);
-  
-  // Fermer si on clique dans le vide (autour de l'image)
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  // Flèche Suivant
-  nextBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    currentIndex++;
-    showImage(currentIndex);
-  });
-
-  // Flèche Précédent
-  prevBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    currentIndex--;
-    showImage(currentIndex);
-  });
-
-  // Navigation au clavier (Flèches gauche/droite et touche Echap)
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('is-active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') { currentIndex++; showImage(currentIndex); }
-    if (e.key === 'ArrowLeft') { currentIndex--; showImage(currentIndex); }
-  });
+}
+function fermerModale(id) {
+  const modale = document.getElementById(id);
+  if (modale) {
+    modale.classList.remove("is-open");
+    document.body.style.overflow = "auto";
+  }
+}
+window.addEventListener("click", (event) => {
+  if (event.target.classList.contains("modale")) {
+    event.target.classList.remove("is-open");
+    document.body.style.overflow = "auto";
+  }
 });
