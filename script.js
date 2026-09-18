@@ -152,6 +152,7 @@ window.addEventListener("click", (event) => {
     document.body.style.overflow = "auto";
   }
 });
+
 // -----------------------------------------------------
 // CARROUSEL D'IMAGES DANS LES CARTES PRODUITS
 // -----------------------------------------------------
@@ -213,65 +214,72 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
 // -----------------------------------------------------
-// CARROUSEL D'IMAGES DANS LES CARTES PRODUITS
+// LIGHTBOX (AGRANDISSEMENT DES IMAGES DE LA GALERIE)
 // -----------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  const carousels = document.querySelectorAll('.pc-media');
+  const galleryItems = document.querySelectorAll('.gallery-item img');
+  const lightbox = document.getElementById('lightbox');
+  
+  if (!lightbox || galleryItems.length === 0) return;
 
-  carousels.forEach(carousel => {
-    const container = carousel.querySelector('.carousel-container');
-    if (!container) return;
-    const slides = container.querySelectorAll('.carousel-slide');
-    const dots = carousel.querySelectorAll('.carousel-dot');
-    const prevBtn = carousel.querySelector('.carousel-prev');
-    const nextBtn = carousel.querySelector('.carousel-next');
-    let currentIndex = 0;
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const prevBtn = document.querySelector('.lightbox-prev');
+  const nextBtn = document.querySelector('.lightbox-next');
+  
+  let currentIndex = 0;
 
-    function updateCarousel(index) {
-      if (index < 0) index = slides.length - 1;
-      if (index >= slides.length) index = 0;
+  // Ouvrir la lightbox au clic sur une image
+  galleryItems.forEach((img, index) => {
+    img.parentElement.addEventListener('click', () => {
       currentIndex = index;
-      container.scrollTo({
-        left: slides[currentIndex].offsetLeft,
-        behavior: 'smooth'
-      });
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentIndex);
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(currentIndex + 1);
-      });
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(currentIndex - 1);
-      });
-    }
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(i);
-      });
-    });
-
-    // Mettre à jour les points lors d'un défilement manuel (swipe tactile)
-    container.addEventListener('scroll', () => {
-      const index = Math.round(container.scrollLeft / container.clientWidth);
-      if (index !== currentIndex && index >= 0 && index < slides.length) {
-        currentIndex = index;
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentIndex);
-        });
-      }
+      showImage(currentIndex);
+      lightbox.classList.add('is-active');
+      document.body.style.overflow = "hidden"; // Bloque le scroll du site
     });
   });
-});
 
+  // Fonction pour afficher l'image correspondante
+  function showImage(index) {
+    if (index >= galleryItems.length) currentIndex = 0; // Boucle à la première
+    if (index < 0) currentIndex = galleryItems.length - 1; // Boucle à la dernière
+    lightboxImg.src = galleryItems[currentIndex].src;
+  }
+
+  // Fermer la lightbox
+  function closeLightbox() {
+    lightbox.classList.remove('is-active');
+    document.body.style.overflow = "auto"; // Réactive le scroll
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  
+  // Fermer si on clique dans le vide (autour de l'image)
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Flèche Suivant
+  nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentIndex++;
+    showImage(currentIndex);
+  });
+
+  // Flèche Précédent
+  prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentIndex--;
+    showImage(currentIndex);
+  });
+
+  // Navigation au clavier (Flèches gauche/droite et touche Echap)
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') { currentIndex++; showImage(currentIndex); }
+    if (e.key === 'ArrowLeft') { currentIndex--; showImage(currentIndex); }
+  });
+});
