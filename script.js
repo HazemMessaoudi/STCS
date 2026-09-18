@@ -315,3 +315,36 @@ window.addEventListener("click", (event) => {
     document.body.style.overflow = "auto";
   }
 });
+function calculerDevis() {
+  const select = document.getElementById('devis-produit');
+  const input = document.getElementById('devis-longueur');
+  const resultatDiv = document.getElementById('devis-resultat');
+  const resQte = document.getElementById('res-qte');
+  const resPrix = document.getElementById('res-prix');
+
+  const longueurACloturer = parseFloat(input.value);
+
+  // Vérification de la saisie
+  if (isNaN(longueurACloturer) || longueurACloturer <= 0) {
+    alert("Veuillez saisir une longueur valide en mètres.");
+    return;
+  }
+
+  // Récupération des attributs de l'option sélectionnée
+  const optionSelectionnee = select.options[select.selectedIndex];
+  const longueurProduit = parseFloat(optionSelectionnee.getAttribute('data-longueur'));
+  const prixUnitaire = parseFloat(optionSelectionnee.getAttribute('data-prix'));
+  const nomUnite = optionSelectionnee.getAttribute('data-unite');
+
+  // Calcul mathématique : Arrondi à l'entier supérieur (ex: 23.2 devient 24)
+  const quantiteRequise = Math.ceil(longueurACloturer / longueurProduit);
+  
+  // Calcul du prix total
+  const prixTotal = quantiteRequise * prixUnitaire;
+
+  // Affichage des résultats
+  resQte.textContent = quantiteRequise + " " + nomUnite;
+  resPrix.textContent = prixTotal.toFixed(2) + " DT";
+  
+  resultatDiv.style.display = "block";
+}
