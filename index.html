@@ -110,12 +110,13 @@
       <div class="sub-filter-group" id="subFilters">
         <button class="sub-filter-btn is-active" data-subcat="simple">Simple Torsion</button>
         <button class="sub-filter-btn" data-subcat="double">Double Torsion</button>
+        <button class="sub-filter-btn" data-subcat="rigide">Grillage Rigide (Panneaux)</button>
       </div>
     </div>
 
     <div class="product-grid" id="productGrid">
 
-      <!-- 1. Grillage Simple Torsion (Carrousel avec tes photos) -->
+      <!-- 1. Grillage Simple Torsion -->
       <article class="product-card" data-cat="grillages" data-subcat="simple">
         <div class="pc-media">
           <div class="carousel-container">
@@ -143,7 +144,7 @@
         </div>
       </article>
 
-      <!-- 2. Grillage Double Torsion (Carrousel avec tes photos) -->
+      <!-- 2. Grillage Double Torsion -->
       <article class="product-card" data-cat="grillages" data-subcat="double" style="display:none;">
         <div class="pc-media">
           <div class="carousel-container">
@@ -171,7 +172,33 @@
         </div>
       </article>
 
-      <!-- 3. Fil Barbelé (Accessoire) -->
+      <!-- 3. Grillage Rigide (Panneaux) -->
+      <article class="product-card" data-cat="grillages" data-subcat="rigide" style="display:none;">
+        <div class="pc-media">
+          <div class="carousel-container">
+            <div class="carousel-slide"><img src="assets/products/panneau-1.jpg" alt="Panneau Rigide 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="assets/products/panneau-2.jpg" alt="Panneau Rigide 2" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn carousel-prev">&#10094;</button>
+          <button class="carousel-btn carousel-next">&#10095;</button>
+          <div class="carousel-dots">
+            <button class="carousel-dot active"></button>
+            <button class="carousel-dot"></button>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div>
+            <span class="pc-cat">Catégorie : Grillage Rigide</span>
+            <h3>Panneaux Rigides</h3>
+            <p>Clôture moderne en treillis soudé conçue pour allier robustesse, durabilité et apparence professionnelle. Idéal pour la sécurité industrielle et résidentielle.</p>
+          </div>
+          <div class="pc-price">
+            <button onclick="ouvrirModale('modale-gr')" class="pc-link">Voir les détails et prix</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. Fil Barbelé (Accessoire) -->
       <article class="product-card" data-cat="accessoires" style="display:none;">
         <div class="pc-media">
           <div class="carousel-container">
@@ -197,7 +224,7 @@
         </div>
       </article>
 
-      <!-- 4. Fil Galvanisé (Accessoire) -->
+      <!-- 5. Fil Galvanisé (Accessoire) -->
       <article class="product-card" data-cat="accessoires" style="display:none;">
         <div class="pc-media">
           <div class="carousel-container">
@@ -270,6 +297,18 @@
       <li><span class="mod-desc">Hauteur : 1,5 m • Longueur : 50 m • Épaisseur : 1,6 mm</span> <span class="mod-price">220 DT/RLX</span></li>
       <li><span class="mod-desc">Grillage Double Torsion G.M <br> Hauteur : 2,0 m • Longueur : 20 m • Épaisseur : 2,0 mm</span> <span class="mod-price">135 DT/RLX</span></li>
       <li><span class="mod-desc">Grillage Double Torsion G.M <br> Hauteur : 1,5 m • Longueur : 20 m • Épaisseur : 2,0 mm</span> <span class="mod-price">120 DT/RLX</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- NOUVELLE MODALE : PANNEAUX RIGIDES -->
+<div id="modale-gr" class="modale">
+  <div class="modale-contenu">
+    <span class="modale-fermer" onclick="fermerModale('modale-gr')">&times;</span>
+    <div class="modale-header"><h3>Panneaux Rigides</h3></div>
+    <ul class="modale-liste">
+      <li><span class="mod-desc">Hauteur : 1,5 m • Longueur : 2,5 m • Épaisseur : 4 mm</span> <span class="mod-price">140 DT / Panneau</span></li>
+      <li><span class="mod-desc">Hauteur : 2,0 m • Longueur : 2,5 m • Épaisseur : 4 mm</span> <span class="mod-price">160 DT / Panneau</span></li>
     </ul>
   </div>
 </div>
