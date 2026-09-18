@@ -143,10 +143,10 @@
             <p>شباك مرن واقتصادي مثالي للمزارع والحدائق. مقاوم للصدأ وسهل التركيب.</p>
           </div>
           <div class="product-specs-list">
-            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 25م • 2,0 مم</span> <strong class="spec-price">210 د.ت</strong></div>
-            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 25م • 2,2 مم</span> <strong class="spec-price">250 د.ت</strong></div>
-            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 25م • 2,0 مم</span> <strong class="spec-price">250 د.ت</strong></div>
-            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 25م • 2,2 مم</span> <strong class="spec-price">270 د.ت</strong></div>
+            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 25م • 2,0 مم</span> <strong class="spec-price">210 د.ت / لفة</strong></div>
+            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 25م • 2,2 مم</span> <strong class="spec-price">250 د.ت / لفة</strong></div>
+            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 25م • 2,0 مم</span> <strong class="spec-price">250 د.ت / لفة</strong></div>
+            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 25م • 2,2 مم</span> <strong class="spec-price">270 د.ت / لفة</strong></div>
           </div>
         </div>
       </article>
@@ -174,10 +174,10 @@
             <p>شباك فائق المتانة مصمم للاستخدام المكثف، دعم الجدران، والحماية القصوى.</p>
           </div>
           <div class="product-specs-list">
-            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 50م • 1,6 مم</span> <strong class="spec-price">320 د.ت</strong></div>
-            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 50م • 1,6 مم</span> <strong class="spec-price">220 د.ت</strong></div>
-            <div class="spec-row"><span>G.M • ارتفاع: 2,0م • طول: 20م • 2,0 مم</span> <strong class="spec-price">135 د.ت</strong></div>
-            <div class="spec-row"><span>G.M • ارتفاع: 1,5م • طول: 20م • 2,0 مم</span> <strong class="spec-price">120 د.ت</strong></div>
+            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 50م • 1,6 مم</span> <strong class="spec-price">320 د.ت / لفة</strong></div>
+            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 50م • 1,6 مم</span> <strong class="spec-price">220 د.ت / لفة</strong></div>
+            <div class="spec-row"><span>G.M • ارتفاع: 2,0م • طول: 20م • 2,0 مم</span> <strong class="spec-price">135 د.ت / لفة</strong></div>
+            <div class="spec-row"><span>G.M • ارتفاع: 1,5م • طول: 20م • 2,0 مم</span> <strong class="spec-price">120 د.ت / لفة</strong></div>
           </div>
         </div>
       </article>
@@ -282,6 +282,7 @@
       <button class="gallery-arrow gallery-prev" aria-label="السابق">&#10094;</button>
       
       <div class="gallery-track" id="galleryTrack">
+        <!-- Les noms de fichiers doivent correspondre exactement à ceux présents dans le dossier images-catalogue -->
         <div class="gallery-item"><img src="assets/images-catalogue/20982cc2-c19c-4219-8c89-cc1c63fee3d7.jpg" alt="STCS إنجازات" loading="lazy"></div>
         <div class="gallery-item"><img src="assets/images-catalogue/3bbed116-a3bd-44f8-a8c8-9ad8b4cfa02e.jpg" alt="STCS إنجازات" loading="lazy"></div>
         <div class="gallery-item"><img src="assets/images-catalogue/3d64b174-d910-4d99-a7f7-183e6d06b529.jpg" alt="STCS إنجازات" loading="lazy"></div>
@@ -348,16 +349,35 @@
       <div>
         <label for="devis-produit" style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; display: block;">1. اختر المنتج</label>
         <select id="devis-produit" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
-          <option value="st-20" data-longueur="25" data-prix="210" data-unite="لفة">شباك بسيط الفتل - 210 د.ت</option>
-          <option value="dt-16" data-longueur="50" data-prix="320" data-unite="لفة">شباك مزدوج الفتل - 320 د.ت</option>
-          <option value="gr-15" data-longueur="2.5" data-prix="140" data-unite="لوح">شباك صلب ارتفاع 1.5م - 140 د.ت</option>
-          <option value="fb-16" data-longueur="200" data-prix="60" data-unite="لفة">سلك شائك 1.6مم - 60 د.ت</option>
+          <optgroup label="شباك بسيط الفتل">
+            <option value="st-1" data-longueur="25" data-prix="210" data-unite="لفة">بسيط الفتل (1,5م / 2,0مم) - 210 د.ت</option>
+            <option value="st-2" data-longueur="25" data-prix="250" data-unite="لفة">بسيط الفتل (1,5م / 2,2مم) - 250 د.ت</option>
+            <option value="st-3" data-longueur="25" data-prix="250" data-unite="لفة">بسيط الفتل (2,0م / 2,0مم) - 250 د.ت</option>
+            <option value="st-4" data-longueur="25" data-prix="270" data-unite="لفة">بسيط الفتل (2,0م / 2,2مم) - 270 د.ت</option>
+          </optgroup>
+          <optgroup label="شباك مزدوج الفتل">
+            <option value="dt-1" data-longueur="50" data-prix="320" data-unite="لفة">مزدوج الفتل (2,0م / 1,6مم) - 320 د.ت</option>
+            <option value="dt-2" data-longueur="50" data-prix="220" data-unite="لفة">مزدوج الفتل (1,5م / 1,6مم) - 220 د.ت</option>
+            <option value="dt-3" data-longueur="20" data-prix="135" data-unite="لفة">مزدوج الفتل G.M (2,0م / 2,0مم) - 135 د.ت</option>
+            <option value="dt-4" data-longueur="20" data-prix="120" data-unite="لفة">مزدوج الفتل G.M (1,5م / 2,0مم) - 120 د.ت</option>
+          </optgroup>
+          <optgroup label="ألواح سياج صلبة">
+            <option value="pr-1" data-longueur="2.5" data-prix="140" data-unite="لوح">شباك صلب (1,5م / 4مم) - 140 د.ت</option>
+            <option value="pr-2" data-longueur="2.5" data-prix="160" data-unite="لوح">شباك صلب (2,0م / 4مم) - 160 د.ت</option>
+          </optgroup>
+          <optgroup label="إكسسوارات (أسلاك)">
+            <option value="fb-1" data-longueur="200" data-prix="60" data-unite="لفة">سلك شائك (200م / 1,6مم) - 60 د.ت</option>
+            <option value="fb-2" data-longueur="200" data-prix="80" data-unite="لفة">سلك شائك (200م / 1,8مم) - 80 د.ت</option>
+            <option value="fg-1" data-longueur="1" data-prix="6.5" data-unite="كغ">سلك مجلفن (1,3مم) - 6.5 د.ت / كغ</option>
+            <option value="fg-2" data-longueur="1" data-prix="6" data-unite="كغ">سلك مجلفن (2,7مم) - 6.0 د.ت / كغ</option>
+            <option value="fg-3" data-longueur="1" data-prix="5" data-unite="كغ">سلك مجلفن (4,9مم) - 5.0 د.ت / كغ</option>
+          </optgroup>
         </select>
       </div>
 
       <div>
-        <label for="devis-longueur" style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; display: block;">2. طول المحيط المراد تسييجه (بالمتر الطولي)</label>
-        <input type="number" id="devis-longueur" placeholder="مثال: 580" min="1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
+        <label for="devis-longueur" style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; display: block;">2. طول المحيط (بالمتر) أو الكمية (بالكغ)</label>
+        <input type="number" id="devis-longueur" placeholder="مثال: 580 (متر) أو 15 (كغ)" min="1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
       </div>
 
       <button onclick="ajouterArticleDevis()" style="background: var(--bg-2); color: var(--ink); border: 1px solid var(--line); padding: 12px; border-radius: 100px; font-weight: 700; font-size: 15px; cursor: pointer; transition: background 0.3s; font-family: var(--f-sans);">
