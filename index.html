@@ -138,10 +138,10 @@
             <p>Grillage souple et économique, idéal pour délimiter vos terrains. Résistant à la corrosion et facile d'installation.</p>
           </div>
           <div class="product-specs-list">
-            <div class="spec-row"><span>H: 1,5m • L: 25m • 2,0 mm</span> <strong class="spec-price">210 DT</strong></div>
-            <div class="spec-row"><span>H: 1,5m • L: 25m • 2,2 mm</span> <strong class="spec-price">250 DT</strong></div>
-            <div class="spec-row"><span>H: 2,0m • L: 25m • 2,0 mm</span> <strong class="spec-price">250 DT</strong></div>
-            <div class="spec-row"><span>H: 2,0m • L: 25m • 2,2 mm</span> <strong class="spec-price">270 DT</strong></div>
+            <div class="spec-row"><span>H: 1,5m • L: 25m • 2,0 mm</span> <strong class="spec-price">210 DT / RLX</strong></div>
+            <div class="spec-row"><span>H: 1,5m • L: 25m • 2,2 mm</span> <strong class="spec-price">250 DT / RLX</strong></div>
+            <div class="spec-row"><span>H: 2,0m • L: 25m • 2,0 mm</span> <strong class="spec-price">250 DT / RLX</strong></div>
+            <div class="spec-row"><span>H: 2,0m • L: 25m • 2,2 mm</span> <strong class="spec-price">270 DT / RLX</strong></div>
           </div>
         </div>
       </article>
@@ -169,10 +169,10 @@
             <p>Maillage ultra-robuste conçu pour un usage intensif, les murs de soutènement et une protection maximale contre les intrusions.</p>
           </div>
           <div class="product-specs-list">
-            <div class="spec-row"><span>H: 2,0m • L: 50m • 1,6 mm</span> <strong class="spec-price">320 DT</strong></div>
-            <div class="spec-row"><span>H: 1,5m • L: 50m • 1,6 mm</span> <strong class="spec-price">220 DT</strong></div>
-            <div class="spec-row"><span>G.M • H: 2,0m • L: 20m • 2,0 mm</span> <strong class="spec-price">135 DT</strong></div>
-            <div class="spec-row"><span>G.M • H: 1,5m • L: 20m • 2,0 mm</span> <strong class="spec-price">120 DT</strong></div>
+            <div class="spec-row"><span>H: 2,0m • L: 50m • 1,6 mm</span> <strong class="spec-price">320 DT / RLX</strong></div>
+            <div class="spec-row"><span>H: 1,5m • L: 50m • 1,6 mm</span> <strong class="spec-price">220 DT / RLX</strong></div>
+            <div class="spec-row"><span>G.M • H: 2,0m • L: 20m • 2,0 mm</span> <strong class="spec-price">135 DT / RLX</strong></div>
+            <div class="spec-row"><span>G.M • H: 1,5m • L: 20m • 2,0 mm</span> <strong class="spec-price">120 DT / RLX</strong></div>
           </div>
         </div>
       </article>
@@ -277,6 +277,7 @@
       <button class="gallery-arrow gallery-prev" aria-label="Précédent">&#10094;</button>
       
       <div class="gallery-track" id="galleryTrack">
+        <!-- Les noms de fichiers doivent correspondre exactement à ceux présents dans le dossier images-catalogue -->
         <div class="gallery-item"><img src="assets/images-catalogue/20982cc2-c19c-4219-8c89-cc1c63fee3d7.jpg" alt="Réalisation STCS" loading="lazy"></div>
         <div class="gallery-item"><img src="assets/images-catalogue/3bbed116-a3bd-44f8-a8c8-9ad8b4cfa02e.jpg" alt="Réalisation STCS" loading="lazy"></div>
         <div class="gallery-item"><img src="assets/images-catalogue/3d64b174-d910-4d99-a7f7-183e6d06b529.jpg" alt="Réalisation STCS" loading="lazy"></div>
@@ -343,16 +344,35 @@
       <div>
         <label for="devis-produit" style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; display: block;">1. Choisissez votre produit</label>
         <select id="devis-produit" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
-          <option value="st-20" data-longueur="25" data-prix="210" data-unite="rouleaux">Grillage Simple Torsion - 210 DT</option>
-          <option value="dt-16" data-longueur="50" data-prix="320" data-unite="rouleaux">Grillage Double Torsion - 320 DT</option>
-          <option value="gr-15" data-longueur="2.5" data-prix="140" data-unite="panneaux">Panneau Rigide H:1,5m - 140 DT</option>
-          <option value="fb-16" data-longueur="200" data-prix="60" data-unite="rouleaux">Fil Barbelé 1,6mm - 60 DT</option>
+          <optgroup label="Grillage Simple Torsion">
+            <option value="st-1" data-longueur="25" data-prix="210" data-unite="rouleaux">Simple Torsion (H:1,5m / 2,0mm) - 210 DT</option>
+            <option value="st-2" data-longueur="25" data-prix="250" data-unite="rouleaux">Simple Torsion (H:1,5m / 2,2mm) - 250 DT</option>
+            <option value="st-3" data-longueur="25" data-prix="250" data-unite="rouleaux">Simple Torsion (H:2,0m / 2,0mm) - 250 DT</option>
+            <option value="st-4" data-longueur="25" data-prix="270" data-unite="rouleaux">Simple Torsion (H:2,0m / 2,2mm) - 270 DT</option>
+          </optgroup>
+          <optgroup label="Grillage Double Torsion">
+            <option value="dt-1" data-longueur="50" data-prix="320" data-unite="rouleaux">Double Torsion (H:2,0m / 1,6mm) - 320 DT</option>
+            <option value="dt-2" data-longueur="50" data-prix="220" data-unite="rouleaux">Double Torsion (H:1,5m / 1,6mm) - 220 DT</option>
+            <option value="dt-3" data-longueur="20" data-prix="135" data-unite="rouleaux">Double Torsion G.M (H:2,0m / 2,0mm) - 135 DT</option>
+            <option value="dt-4" data-longueur="20" data-prix="120" data-unite="rouleaux">Double Torsion G.M (H:1,5m / 2,0mm) - 120 DT</option>
+          </optgroup>
+          <optgroup label="Panneaux Rigides">
+            <option value="pr-1" data-longueur="2.5" data-prix="140" data-unite="panneaux">Panneau Rigide (H:1,5m / 4mm) - 140 DT</option>
+            <option value="pr-2" data-longueur="2.5" data-prix="160" data-unite="panneaux">Panneau Rigide (H:2,0m / 4mm) - 160 DT</option>
+          </optgroup>
+          <optgroup label="Accessoires (Fils)">
+            <option value="fb-1" data-longueur="200" data-prix="60" data-unite="rouleaux">Fil Barbelé (200m / 1,6mm) - 60 DT</option>
+            <option value="fb-2" data-longueur="200" data-prix="80" data-unite="rouleaux">Fil Barbelé (200m / 1,8mm) - 80 DT</option>
+            <option value="fg-1" data-longueur="1" data-prix="6.5" data-unite="kg">Fil Galvanisé (1,3mm) - 6.5 DT / kg</option>
+            <option value="fg-2" data-longueur="1" data-prix="6" data-unite="kg">Fil Galvanisé (2,7mm) - 6.0 DT / kg</option>
+            <option value="fg-3" data-longueur="1" data-prix="5" data-unite="kg">Fil Galvanisé (4,9mm) - 5.0 DT / kg</option>
+          </optgroup>
         </select>
       </div>
 
       <div>
-        <label for="devis-longueur" style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; display: block;">2. Périmètre à clôturer (en mètres linéaires)</label>
-        <input type="number" id="devis-longueur" placeholder="Ex: 580" min="1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
+        <label for="devis-longueur" style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; display: block;">2. Périmètre (en m) ou Quantité (en kg)</label>
+        <input type="number" id="devis-longueur" placeholder="Ex: 580 (mètres) ou 15 (kg)" min="1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
       </div>
 
       <button onclick="ajouterArticleDevis()" style="background: var(--bg-2); color: var(--ink); border: 1px solid var(--line); padding: 12px; border-radius: 100px; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.3s;">
