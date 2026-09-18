@@ -330,7 +330,7 @@ function ajouterArticleDevis() {
   const isAR = document.documentElement.dir === 'rtl';
 
   if (isNaN(longueur) || longueur <= 0) {
-    alert(isAR ? "الرجاء إدخال طول صحيح بالمتر." : "Veuillez saisir une longueur valide en mètres.");
+    alert(isAR ? "الرجاء إدخال طول أو كمية صحيحة." : "Veuillez saisir une longueur ou une quantité valide.");
     return;
   }
 
@@ -379,9 +379,12 @@ function afficherPanier() {
     
     // Création des détails de l'article
     const details = document.createElement('div');
+    const metricLabel = article.unite === 'kg' ? (isAR ? 'الكمية:' : 'Quantité:') : (isAR ? 'المحيط:' : 'Périmètre:');
+    const metricSymbol = article.unite === 'kg' ? (isAR ? 'كغ' : 'kg') : (isAR ? 'م' : 'm');
+    
     details.innerHTML = `
       <strong style="display:block; color:var(--ink); font-size:15px; margin-bottom:4px;">${article.nom}</strong>
-      <span style="font-size:13px; color:var(--mute);">${isAR ? 'المحيط:' : 'Périmètre:'} ${article.longueur}m &rarr; <b>${article.quantite} ${article.unite}</b></span>
+      <span style="font-size:13px; color:var(--mute);">${metricLabel} ${article.longueur}${metricSymbol} &rarr; <b>${article.quantite} ${article.unite}</b></span>
     `;
     
     // Création du prix et du bouton de suppression
@@ -424,10 +427,13 @@ function finaliserDemandeDevis() {
   let total = 0;
   
   panierDevis.forEach(article => {
+    const metricLabel = article.unite === 'kg' ? (isAR ? 'الكمية' : 'Quantité') : (isAR ? 'المحيط' : 'Périmètre');
+    const metricSymbol = article.unite === 'kg' ? (isAR ? 'كغ' : 'kg') : (isAR ? 'م' : 'm');
+    
     if (isAR) {
-      message += `- ${article.nom} (المحيط: ${article.longueur}م) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
+      message += `- ${article.nom} (${metricLabel}: ${article.longueur}${metricSymbol}) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
     } else {
-      message += `- ${article.nom} (Périmètre: ${article.longueur}m) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
+      message += `- ${article.nom} (${metricLabel}: ${article.longueur}${metricSymbol}) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
     }
     total += article.prixTotal;
   });
