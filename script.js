@@ -22,7 +22,12 @@ const I18N = {
     galleryAlt: (i, n) => `Réalisation STCS — photo ${i} sur ${n}`,
     lightboxAlt: (i, n) => `Réalisation STCS — photo ${i} sur ${n} (agrandie)`,
     waIntro: "Bonjour STCS, je souhaite un devis pour :\n\n",
-    waTotal: "Total estimé"
+    waTotal: "Total estimé",
+    waName: "Nom",
+    waRegion: "Gouvernorat",
+    addToQuote: "+ Devis",
+    addToQuoteLabel: (name) => `Ajouter ${name} au devis`,
+    seeProduct: "Voir la fiche produit"
   },
   ar: {
     currency: "د.ت",
@@ -38,10 +43,28 @@ const I18N = {
     galleryAlt: (i, n) => `إنجاز STCS — صورة ${i} من ${n}`,
     lightboxAlt: (i, n) => `إنجاز STCS — صورة ${i} من ${n} (مكبرة)`,
     waIntro: "مرحباً STCS، أود طلب تسعيرة للمنتجات التالية:\n\n",
-    waTotal: "المجموع التقديري"
+    waTotal: "المجموع التقديري",
+    waName: "الاسم",
+    waRegion: "الولاية",
+    addToQuote: "+ تسعيرة",
+    addToQuoteLabel: (name) => `إضافة ${name} إلى التسعيرة`,
+    seeProduct: "عرض صفحة المنتج"
   }
 };
 const T = I18N[LANG];
+
+// Les 24 gouvernorats (pour la livraison)
+const GOUVERNORATS = [
+  ["Ariana", "أريانة"], ["Béja", "باجة"], ["Ben Arous", "بن عروس"], ["Bizerte", "بنزرت"],
+  ["Gabès", "قابس"], ["Gafsa", "قفصة"], ["Jendouba", "جندوبة"], ["Kairouan", "القيروان"],
+  ["Kasserine", "القصرين"], ["Kébili", "قبلي"], ["Le Kef", "الكاف"], ["Mahdia", "المهدية"],
+  ["La Manouba", "منوبة"], ["Médenine", "مدنين"], ["Monastir", "المنستير"], ["Nabeul", "نابل"],
+  ["Sfax", "صفاقس"], ["Sidi Bouzid", "سيدي بوزيد"], ["Siliana", "سليانة"], ["Sousse", "سوسة"],
+  ["Tataouine", "تطاوين"], ["Tozeur", "توزر"], ["Tunis", "تونس"], ["Zaghouan", "زغوان"]
+];
+
+// Adresse de la fiche produit (ex. grillage-simple-torsion.html / grillage-simple-torsion-ar.html)
+const productPageUrl = (p) => `${p.slug}${LANG === "ar" ? "-ar" : ""}.html`;
 
 const formatPrice = (n) => String(n);
 const formatTotal = (n) => n.toFixed(2) + " DT";
@@ -122,7 +145,7 @@ function el(tag, attrs = {}, children = []) {
   return node;
 }
 
-function renderProductCard(p) {
+function renderProductCard(p, { linkToPage = true } = {}) {
   const n = p.images.length;
   const slides = p.images.map((img, i) =>
     el("div", { class: "carousel-slide" }, [
@@ -154,7 +177,10 @@ function renderProductCard(p) {
     p.variants.map((v) =>
       el("div", { class: "spec-row" }, [
         el("span", { text: v.spec[LANG] }),
-        el("strong", { class: "spec-price", text: `${formatPrice(v.price)} ${T.currency} / ${p.unit[LANG]}` })
+        el("div", { class: "spec-actions" }, [
+          el("strong", { class: "spec-price", text: `${formatPrice(v.price)} ${T.currency} / ${p.unit[LANG]}` }),
+          el("button", { type: "button", class: "spec-add", "data-variant": v.id, "aria-label": T.addToQuoteLabel(v.option[LANG]), text: T.addToQuote })
+        ])
       ])
     )
   );
@@ -164,8 +190,9 @@ function renderProductCard(p) {
     el("div", { class: "pc-body" }, [
       el("div", {}, [
         el("span", { class: "pc-cat", text: p.catLabel[LANG] }),
-        el("h3", { text: p.name[LANG] }),
-        el("p", { text: p.desc[LANG] })
+        el("h3", {}, [linkToPage ? el("a", { href: productPageUrl(p), text: p.name[LANG] }) : p.name[LANG]]),
+        el("p", { text: p.desc[LANG] }),
+        linkToPage ? el("a", { class: "pc-link", href: productPageUrl(p), text: `${T.seeProduct} →` }) : null
       ]),
       specs
     ])
@@ -288,6 +315,12 @@ function finaliserDemandeDevis() {
 
   message += `\n${T.waTotal} : ${formatTotal(total)}`;
 
+  const nom = (document.getElementById("devis-nom") || {}).value || "";
+  const region = (document.getElementById("devis-gouvernorat") || {}).value || "";
+  if (nom.trim() || region) message += "\n";
+  if (nom.trim()) message += `\n${T.waName} : ${nom.trim()}`;
+  if (region) message += `\n${T.waRegion} : ${region}`;
+
   const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(waUrl, "_blank", "noopener");
 }
@@ -367,6 +400,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const productGrid = document.getElementById("productGrid");
   if (productGrid && typeof STCS_PRODUCTS !== "undefined") {
     STCS_PRODUCTS.forEach((p) => productGrid.appendChild(renderProductCard(p)));
+  }
+
+  // Fiche produit (pages grillage-*.html, fil-*.html…)
+  const productDetail = document.getElementById("productDetail");
+  if (productDetail && typeof STCS_PRODUCTS !== "undefined") {
+    const p = STCS_PRODUCTS.find((x) => x.id === productDetail.dataset.product);
+    if (p) productDetail.appendChild(renderProductCard(p, { linkToPage: false }));
   }
 
   const catBtns = document.querySelectorAll(".filter-btn");
@@ -569,6 +609,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const modale = document.getElementById("modale-devis");
   const select = document.getElementById("devis-produit");
   if (select && typeof STCS_PRODUCTS !== "undefined") renderQuoteOptions(select);
+
+  const selectRegion = document.getElementById("devis-gouvernorat");
+  if (selectRegion) {
+    GOUVERNORATS.forEach(([fr, ar]) => selectRegion.appendChild(el("option", { value: LANG === "ar" ? ar : fr, text: LANG === "ar" ? ar : fr })));
+  }
+
+  // Bouton « + Devis » d'une ligne de prix : ouvre le calculateur avec l'article déjà choisi
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".spec-add");
+    if (!btn || !modale || !select) return;
+    select.value = btn.dataset.variant;
+    openDialog(modale, "is-open");
+    const input = document.getElementById("devis-longueur");
+    input.focus({ preventScroll: true });
+    input.classList.remove("is-highlight");
+    void input.offsetWidth;
+    input.classList.add("is-highlight");
+  });
 
   document.querySelectorAll("[data-open-modal]").forEach((btn) => {
     btn.addEventListener("click", () => openDialog(document.getElementById(btn.dataset.openModal), "is-open"));

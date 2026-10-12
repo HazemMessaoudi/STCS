@@ -9,10 +9,22 @@ Site statique (HTML/CSS/JS, sans build) de la Société Tunisienne de Clôture &
 | `script.js` | Catalogue, filtres, carrousels, galerie, calculateur de devis WhatsApp |
 | `styles.css` | Styles (FR + AR) |
 | `assets/vendor/lenis.min.js` | Défilement fluide (Lenis 1.1.13, licence MIT) |
+| `grillage-*.html`, `panneaux-rigides*.html`, `fil-*.html` | Fiches produits FR et AR (**générées**, ne pas modifier à la main) |
+| `tools/build-pages.js` | Génère les fiches produits et `sitemap.xml` |
 
 ## Modifier un prix ou un produit
-Éditer uniquement `products.js`. Les cartes, le calculateur et le message WhatsApp
-se mettent à jour automatiquement en français et en arabe.
+Éditer uniquement `products.js`. Les cartes, les fiches produits, le calculateur et le
+message WhatsApp se mettent à jour automatiquement en français et en arabe.
+
+Après avoir **ajouté un produit** ou modifié ses **textes** (`name`, `intro`, `points`…),
+ou pour mettre à jour les prix vus par Google, régénérer les fiches :
+
+```
+node tools/build-pages.js
+```
+
+Conseil Render : mettre `node tools/build-pages.js` comme **Build Command** du site
+statique pour que les fiches soient régénérées automatiquement à chaque déploiement.
 
 ## Ajouter une photo à la galerie
 1. Copier la photo dans `assets/images-catalogue/<nom>.jpg`
