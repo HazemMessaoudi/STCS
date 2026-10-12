@@ -261,6 +261,16 @@
       </div>
       <p class="panier-note">الأسعار تقديرية. سيتم تأكيد التسعيرة النهائية عبر واتساب.</p>
 
+      <fieldset class="devis-client">
+        <legend class="devis-label">3. معلوماتك <span class="devis-optionnel">(اختياري، لرد أسرع)</span></legend>
+        <div class="devis-client-grid">
+          <input type="text" id="devis-nom" class="devis-input" placeholder="الاسم" autocomplete="name" aria-label="الاسم">
+          <select id="devis-gouvernorat" class="devis-input" aria-label="ولاية التوصيل">
+            <option value="">ولاية التوصيل…</option>
+          </select>
+        </div>
+      </fieldset>
+
       <button type="button" id="devis-envoyer" class="btn btn--primary">
         إرسال طلب التسعيرة النهائي
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>

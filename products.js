@@ -11,11 +11,26 @@
              la quantité = arrondi supérieur (périmètre / cover)
              "weight" → le client saisit directement un poids en kg
    cover   : mètres couverts par une unité vendue (rouleau, panneau)
+   slug    : nom de la fiche produit (ex. grillage-simple-torsion.html)
+   intro / points : textes de la fiche produit
+
+   Après avoir ajouté un produit ou modifié un texte, régénérer les fiches :
+     node tools/build-pages.js
+   (les prix, eux, sont toujours lus en direct depuis ce fichier)
 */
 
 const STCS_PRODUCTS = [
   {
     id: "simple",
+    slug: "grillage-simple-torsion",
+    intro: {
+      fr: "Le grillage simple torsion est la solution la plus économique pour clôturer un terrain, un jardin ou une exploitation agricole. Vendu en rouleaux de 25 m, il se déroule rapidement et s'adapte aux terrains irréguliers.",
+      ar: "الشباك البسيط الفتل هو الحل الأكثر اقتصادية لتسييج قطعة أرض أو حديقة أو مستغلة فلاحية. يُباع في لفات بطول 25 م، سهل الفرش ويتأقلم مع الأراضي غير المستوية."
+    },
+    points: {
+      fr: ["Rouleaux de 25 m", "Hauteurs : 1,5 m et 2,0 m", "Fil de 2,0 mm ou 2,2 mm", "Résistant à la corrosion"],
+      ar: ["لفات بطول 25 م", "الارتفاع: 1,5 م و2,0 م", "سلك 2,0 مم أو 2,2 مم", "مقاوم للصدأ"]
+    },
     cat: "grillages",
     subcat: "simple",
     images: ["simple-torsion-1", "simple-torsion-2", "simple-torsion-3"],
@@ -38,6 +53,15 @@ const STCS_PRODUCTS = [
   },
   {
     id: "double",
+    slug: "grillage-double-torsion",
+    intro: {
+      fr: "Le grillage double torsion offre un maillage renforcé, conçu pour un usage intensif : clôtures de sécurité, murs de soutènement et protection contre les intrusions. Disponible en rouleaux de 50 m et en grosse maille (G.M) de 20 m.",
+      ar: "الشباك المزدوج الفتل يوفر نسيجاً معززاً مصمماً للاستخدام المكثف: أسوار الأمان، دعم الجدران والحماية من التسلل. متوفر في لفات بطول 50 م وبعيون كبيرة (G.M) بطول 20 م."
+    },
+    points: {
+      fr: ["Rouleaux de 50 m (1,6 mm)", "Grosse maille G.M : rouleaux de 20 m (2,0 mm)", "Hauteurs : 1,5 m et 2,0 m", "Maillage ultra-robuste"],
+      ar: ["لفات بطول 50 م (1,6 مم)", "عيون كبيرة G.M: لفات بطول 20 م (2,0 مم)", "الارتفاع: 1,5 م و2,0 م", "نسيج فائق المتانة"]
+    },
     cat: "grillages",
     subcat: "double",
     images: ["double-torsion-1", "double-torsion-2", "double-torsion-3"],
@@ -60,6 +84,15 @@ const STCS_PRODUCTS = [
   },
   {
     id: "rigide",
+    slug: "panneaux-rigides",
+    intro: {
+      fr: "Les panneaux rigides en treillis soudé donnent une clôture nette et professionnelle, idéale pour les villas, les entreprises et les sites industriels. Chaque panneau couvre 2,5 m de longueur.",
+      ar: "ألواح السياج الصلبة الملحومة تمنح سياجاً أنيقاً ومهنياً، مثالية للفيلات والشركات والمواقع الصناعية. كل لوح يغطي 2,5 م من الطول."
+    },
+    points: {
+      fr: ["Panneaux de 2,5 m de long", "Hauteurs : 1,5 m et 2,0 m", "Fil de 4 mm", "Treillis soudé, aspect professionnel"],
+      ar: ["ألواح بطول 2,5 م", "الارتفاع: 1,5 م و2,0 م", "سلك 4 مم", "شبك ملحوم بمظهر مهني"]
+    },
     cat: "grillages",
     subcat: "rigide",
     images: ["panneau-1", "panneau-2"],
@@ -80,6 +113,15 @@ const STCS_PRODUCTS = [
   },
   {
     id: "barbele",
+    slug: "fil-barbele",
+    intro: {
+      fr: "Le fil barbelé renforce la sécurité d'une clôture existante : posé en haut d'un grillage ou d'un mur, il dissuade les intrusions. Vendu en rouleaux de 200 m.",
+      ar: "السلك الشائك يعزز حماية السياج الموجود: يُركّب أعلى الشباك أو الجدار لردع التسلل. يُباع في لفات بطول 200 م."
+    },
+    points: {
+      fr: ["Rouleaux de 200 m", "Fil de 1,6 mm ou 1,8 mm", "Résistance maximale"],
+      ar: ["لفات بطول 200 م", "سلك 1,6 مم أو 1,8 مم", "مقاومة قصوى"]
+    },
     cat: "accessoires",
     images: ["fil-barbele-1", "fil-barbele-2"],
     measure: "length",
@@ -99,6 +141,15 @@ const STCS_PRODUCTS = [
   },
   {
     id: "galvanise",
+    slug: "fil-galvanise",
+    intro: {
+      fr: "Le fil lisse galvanisé à chaud sert de fil de tension pour les clôtures en grillage et convient aux usages agricoles. Il est vendu au kilo, en trois épaisseurs.",
+      ar: "السلك الأملس المجلفن على الساخن يُستعمل كسلك شد لأسوار الشباك ويناسب الاستعمالات الفلاحية. يُباع بالكيلوغرام وفي ثلاث سماكات."
+    },
+    points: {
+      fr: ["Galvanisé à chaud", "Épaisseurs : 1,3 mm, 2,7 mm et 4,9 mm", "Vendu au kg"],
+      ar: ["مجلفن على الساخن", "السماكة: 1,3 مم، 2,7 مم و4,9 مم", "يُباع بالكيلوغرام"]
+    },
     cat: "accessoires",
     images: ["fil-galvanise-1", "fil-galvanise-2", "fil-galvanise-3"],
     measure: "weight",

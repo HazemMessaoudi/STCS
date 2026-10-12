@@ -789,3 +789,73 @@ button { cursor: pointer; color: inherit; padding: 0; }
 [dir="rtl"] .ct-arrow { right: auto; left: 24px; }
 [dir="rtl"] .social-float { right: auto; left: 2rem; }
 @media (max-width: 640px){ [dir="rtl"] .social-float { left: 1.5rem; } }
+
+/* ---------- Bouton « + Devis » sur chaque ligne de prix ---------- */
+.spec-row { flex-wrap: wrap; gap: 6px 12px; }
+.spec-actions { display: flex; align-items: center; gap: 10px; margin-inline-start: auto; }
+.spec-add {
+  background: var(--ink); color: var(--bg); border-radius: 100px;
+  padding: 5px 12px; font-size: 12px; font-weight: 600; white-space: nowrap;
+  transition: background .25s;
+}
+.spec-add:hover { background: var(--green); }
+.product-card h3 a { color: inherit; }
+.product-card h3 a:hover { color: var(--green); }
+.pc-link { display: inline-block; margin-top: 4px; font-size: 13.5px; font-weight: 600; color: var(--green); }
+.pc-link:hover { text-decoration: underline; }
+@keyframes highlight { 0%, 100% { box-shadow: 0 0 0 0 rgba(42,138,90,0); } 30% { box-shadow: 0 0 0 4px rgba(42,138,90,.35); } }
+.devis-input.is-highlight { animation: highlight 1.2s ease; border-color: var(--green-glow); }
+
+/* ---------- Coordonnées dans le devis ---------- */
+.devis-client { border: none; padding: 0; margin: 0 0 16px; }
+.devis-client legend { padding: 0; }
+.devis-optionnel { font-weight: 400; color: var(--mute); font-size: 12.5px; }
+.devis-client-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 520px) { .devis-client-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Fiches produits ---------- */
+.product-page { padding-top: clamp(120px, 14vw, 170px); background: var(--bg-2); }
+.breadcrumb {
+  max-width: 1300px; margin: 0 auto 28px; display: flex; flex-wrap: wrap; gap: 8px;
+  font-size: 13px; color: var(--mute);
+}
+.breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
+.breadcrumb [aria-current] { color: var(--ink); font-weight: 600; }
+.product-page-grid {
+  max-width: 1300px; margin: 0 auto; display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: start;
+}
+.product-page-title {
+  font-family: var(--f-display); font-weight: 500; font-size: clamp(40px, 5.5vw, 80px);
+  line-height: 1; letter-spacing: -.02em; margin: 16px 0 20px; color: var(--ink);
+}
+[dir="rtl"] .product-page-title { font-weight: 700; line-height: 1.2; letter-spacing: 0; }
+.product-page-lead { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.6; color: var(--ink-2); margin: 0 0 20px; max-width: 58ch; }
+.product-page-points { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 10px; }
+.product-page-points li { position: relative; padding-inline-start: 26px; font-size: 15px; color: var(--ink-2); }
+.product-page-points li::before {
+  content: ""; position: absolute; inset-inline-start: 0; top: .45em; width: 12px; height: 7px;
+  border-inline-start: 2px solid var(--green); border-bottom: 2px solid var(--green); transform: rotate(-45deg);
+}
+[dir="rtl"] .product-page-points li::before { transform: rotate(45deg); }
+.product-page-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.product-page-actions .btn { width: auto; padding: 15px 26px; font-size: 15px; }
+.btn--whatsapp { background: #25D366; color: #fff; border: none; }
+.btn--whatsapp:hover { background: #1ebe5b; }
+.product-detail .product-card { flex: none; width: 100%; animation: none; }
+.product-detail .product-card:hover { transform: none; }
+@media (max-width: 900px) { .product-page-grid { grid-template-columns: 1fr; } }
+
+.related { padding-top: 60px; padding-bottom: 60px; }
+.related-title { max-width: 1300px; margin: 0 auto 20px; font-family: var(--f-display); font-weight: 500; font-size: clamp(26px, 3vw, 40px); }
+[dir="rtl"] .related-title { font-weight: 700; }
+.related-list {
+  max-width: 1300px; margin: 0 auto; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px;
+}
+.related-list a {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 18px 20px; background: var(--white); border: 1px solid var(--line); border-radius: 12px;
+  font-weight: 600; transition: background .3s, color .3s;
+}
+.related-list a:hover { background: var(--ink); color: var(--bg); }

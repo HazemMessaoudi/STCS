@@ -261,6 +261,16 @@
       </div>
       <p class="panier-note">Prix indicatifs. Le devis final vous sera confirmé sur WhatsApp.</p>
 
+      <fieldset class="devis-client">
+        <legend class="devis-label">3. Vos coordonnées <span class="devis-optionnel">(facultatif, pour une réponse plus rapide)</span></legend>
+        <div class="devis-client-grid">
+          <input type="text" id="devis-nom" class="devis-input" placeholder="Votre nom" autocomplete="name" aria-label="Votre nom">
+          <select id="devis-gouvernorat" class="devis-input" aria-label="Gouvernorat de livraison">
+            <option value="">Gouvernorat de livraison…</option>
+          </select>
+        </div>
+      </fieldset>
+
       <button type="button" id="devis-envoyer" class="btn btn--primary">
         Demander un devis final
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
