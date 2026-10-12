@@ -21,3 +21,8 @@ se mettent à jour automatiquement en français et en arabe.
 
 ## Photos produits
 Format WebP dans `assets/products/` (sans espaces dans les noms), référencées par leur nom dans `products.js`.
+
+## Mise en ligne
+Domaine : **https://www.stcs.tn** (fichier `CNAME` pour GitHub Pages).
+`robots.txt` et `sitemap.xml` sont prêts pour Google Search Console.
+Si le domaine change, mettre à jour les URL dans le `<head>` des deux pages, `sitemap.xml`, `robots.txt` et `CNAME`.

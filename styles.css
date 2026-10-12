@@ -402,7 +402,7 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
 }
 
 /* ---------- Contact ---------- */
-.contact-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 1400px; margin: 0 auto; }
+.contact-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1400px; margin: 0 auto; }
 .contact-tile{ background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 30px 30px; min-height: 180px; display:flex; flex-direction:column; justify-content: space-between; position: relative; overflow: hidden; transition: background .5s, color .5s, transform .5s var(--ease); }
 .contact-tile:hover{ background: var(--ink); color: var(--bg); transform: translateY(-4px); }
 .contact-tile:hover .ct-label { color: rgba(255,255,255,.5); }
@@ -410,7 +410,9 @@ section { padding: clamp(80px,10vw,140px) var(--pad-x); position: relative; }
 .contact-tile strong{ font-family: var(--f-display); font-weight: 500; font-size: clamp(28px, 3vw, 44px); letter-spacing: -.01em; line-height: 1.1; }
 .ct-arrow{ position: absolute; top: 24px; right: 24px; font-size: 22px; opacity: .5; transition: transform .4s var(--ease), opacity .4s; }
 .contact-tile:hover .ct-arrow{ transform: translate(4px,-4px); opacity: 1; }
-@media (max-width: 640px){ .contact-grid{ grid-template-columns: 1fr; } }
+@media (max-width: 900px){ .contact-grid{ grid-template-columns: 1fr; } }
+.contact-note{ max-width: 1400px; margin: 20px auto 0; font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+[dir="rtl"] .contact-note{ font-family: var(--f-sans); letter-spacing: 0; font-size: 14px; }
 
 /* ---------- Footer ---------- */
 .footer{ background: var(--ink); color: var(--bg); padding: 60px var(--pad-x) 30px; position: relative; overflow: hidden; }
@@ -775,3 +777,15 @@ button { cursor: pointer; color: inherit; padding: 0; }
   .preloader { display: none; }
   .js .reveal-line { opacity: 1; transform: none; }
 }
+
+/* Arabe : pas de police monospace ni d'espacement entre les lettres
+   (cela casse les liaisons de l'écriture arabe) */
+[dir="rtl"] .eyebrow, [dir="rtl"] .ct-label, [dir="rtl"] .pc-cat, [dir="rtl"] .stat p,
+[dir="rtl"] .hero-kicker, [dir="rtl"] .hero-meta .pill, [dir="rtl"] .scroll-hint,
+[dir="rtl"] .footer-bottom, [dir="rtl"] .preloader-caption {
+  font-family: var(--f-sans); letter-spacing: 0; text-transform: none;
+}
+[dir="rtl"] .eyebrow, [dir="rtl"] .ct-label, [dir="rtl"] .pc-cat, [dir="rtl"] .stat p { font-size: 13px; }
+[dir="rtl"] .ct-arrow { right: auto; left: 24px; }
+[dir="rtl"] .social-float { right: auto; left: 2rem; }
+@media (max-width: 640px){ [dir="rtl"] .social-float { left: 1.5rem; } }
