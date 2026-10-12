@@ -1,25 +1,330 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Lenis smooth scroll
-  if (typeof Lenis !== 'undefined') {
-    const lenis = new Lenis({
-      lerp: 0.1,
-      wheelMultiplier: 1.1,
-      smoothWheel: true,
-    });
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+/* ============================================
+   STCS — Scripts du site (FR + AR)
+   Les produits, prix et photos viennent de products.js
+   ============================================ */
+
+const LANG = document.documentElement.lang === "ar" ? "ar" : "fr";
+const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const WHATSAPP_NUMBER = "21628545844";
+
+const I18N = {
+  fr: {
+    currency: "DT",
+    invalidQty: "Veuillez saisir une longueur ou une quantité valide.",
+    perimeter: "Périmètre",
+    quantity: "Quantité",
+    meter: "m",
+    kg: "kg",
+    remove: "Supprimer",
+    prevImg: "Image précédente",
+    nextImg: "Image suivante",
+    showImg: (i) => `Afficher l'image ${i}`,
+    galleryAlt: (i, n) => `Réalisation STCS — photo ${i} sur ${n}`,
+    lightboxAlt: (i, n) => `Réalisation STCS — photo ${i} sur ${n} (agrandie)`,
+    waIntro: "Bonjour STCS, je souhaite un devis pour :\n\n",
+    waTotal: "Total estimé"
+  },
+  ar: {
+    currency: "د.ت",
+    invalidQty: "الرجاء إدخال طول أو كمية صحيحة.",
+    perimeter: "المحيط",
+    quantity: "الكمية",
+    meter: "م",
+    kg: "كغ",
+    remove: "حذف",
+    prevImg: "الصورة السابقة",
+    nextImg: "الصورة التالية",
+    showImg: (i) => `عرض الصورة ${i}`,
+    galleryAlt: (i, n) => `إنجاز STCS — صورة ${i} من ${n}`,
+    lightboxAlt: (i, n) => `إنجاز STCS — صورة ${i} من ${n} (مكبرة)`,
+    waIntro: "مرحباً STCS، أود طلب تسعيرة للمنتجات التالية:\n\n",
+    waTotal: "المجموع التقديري"
+  }
+};
+const T = I18N[LANG];
+
+const formatPrice = (n) => String(n);
+const formatTotal = (n) => n.toFixed(2) + " DT";
+
+// -----------------------------------------------------
+// DÉFILEMENT FLUIDE (Lenis) + verrouillage pour les fenêtres
+// -----------------------------------------------------
+let lenis = null;
+
+function lockScroll() {
+  document.body.style.overflow = "hidden";
+  if (lenis) lenis.stop();
+}
+
+function unlockScroll() {
+  document.body.style.overflow = "";
+  if (lenis) lenis.start();
+}
+
+// -----------------------------------------------------
+// FENÊTRES (modale devis + lightbox) : Échap, focus, clavier
+// -----------------------------------------------------
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])';
+let activeDialog = null;
+let lastFocused = null;
+
+function openDialog(el, openClass) {
+  if (!el) return;
+  lastFocused = document.activeElement;
+  activeDialog = { el, openClass };
+  el.classList.add(openClass);
+  el.setAttribute("aria-hidden", "false");
+  lockScroll();
+  const first = el.querySelector("[data-autofocus]") || el.querySelector(FOCUSABLE);
+  if (first) first.focus({ preventScroll: true });
+}
+
+function closeDialog() {
+  if (!activeDialog) return;
+  const { el, openClass } = activeDialog;
+  el.classList.remove(openClass);
+  el.setAttribute("aria-hidden", "true");
+  activeDialog = null;
+  unlockScroll();
+  if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus({ preventScroll: true });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!activeDialog) return;
+  if (e.key === "Escape") {
+    e.preventDefault();
+    closeDialog();
+    return;
+  }
+  if (e.key === "Tab") {
+    // Garde le focus à l'intérieur de la fenêtre ouverte
+    const items = [...activeDialog.el.querySelectorAll(FOCUSABLE)].filter((n) => n.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
+
+// -----------------------------------------------------
+// RENDU DU CATALOGUE (cartes + calculateur) depuis products.js
+// -----------------------------------------------------
+function el(tag, attrs = {}, children = []) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "text") node.textContent = v;
+    else if (k === "class") node.className = v;
+    else node.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of [].concat(children)) if (c) node.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+  return node;
+}
+
+function renderProductCard(p) {
+  const n = p.images.length;
+  const slides = p.images.map((img, i) =>
+    el("div", { class: "carousel-slide" }, [
+      el("img", {
+        src: `assets/products/${img}.webp`,
+        alt: n > 1 ? `${p.name[LANG]} — ${i + 1}/${n}` : p.name[LANG],
+        loading: "lazy",
+        decoding: "async",
+        width: 600,
+        height: 450
+      })
+    ])
+  );
+
+  const media = el("div", { class: "pc-media" }, [el("div", { class: "carousel-container" }, slides)]);
+  if (n > 1) {
+    media.appendChild(el("button", { type: "button", class: "carousel-btn carousel-prev", "aria-label": T.prevImg, text: "❮" }));
+    media.appendChild(el("button", { type: "button", class: "carousel-btn carousel-next", "aria-label": T.nextImg, text: "❯" }));
+    media.appendChild(
+      el("div", { class: "carousel-dots" },
+        p.images.map((_, i) =>
+          el("button", { type: "button", class: "carousel-dot" + (i === 0 ? " active" : ""), "aria-label": T.showImg(i + 1), "aria-current": i === 0 ? "true" : null })
+        )
+      )
+    );
   }
 
-  // Preloader
+  const specs = el("div", { class: "product-specs-list" },
+    p.variants.map((v) =>
+      el("div", { class: "spec-row" }, [
+        el("span", { text: v.spec[LANG] }),
+        el("strong", { class: "spec-price", text: `${formatPrice(v.price)} ${T.currency} / ${p.unit[LANG]}` })
+      ])
+    )
+  );
+
+  return el("article", { class: "product-card", "data-cat": p.cat, "data-subcat": p.subcat || null }, [
+    media,
+    el("div", { class: "pc-body" }, [
+      el("div", {}, [
+        el("span", { class: "pc-cat", text: p.catLabel[LANG] }),
+        el("h3", { text: p.name[LANG] }),
+        el("p", { text: p.desc[LANG] })
+      ]),
+      specs
+    ])
+  ]);
+}
+
+function renderQuoteOptions(select) {
+  const groups = new Map();
+  STCS_PRODUCTS.forEach((p) => {
+    const label = p.group[LANG];
+    if (!groups.has(label)) groups.set(label, el("optgroup", { label }));
+    const og = groups.get(label);
+    p.variants.forEach((v) => {
+      const perKg = p.measure === "weight" ? ` / ${p.unit[LANG]}` : "";
+      og.appendChild(el("option", { value: v.id, text: `${v.option[LANG]} - ${formatPrice(v.price)} ${T.currency}${perKg}` }));
+    });
+  });
+  groups.forEach((og) => select.appendChild(og));
+}
+
+function findVariant(id) {
+  for (const p of STCS_PRODUCTS) {
+    const v = p.variants.find((x) => x.id === id);
+    if (v) return { product: p, variant: v };
+  }
+  return null;
+}
+
+// -----------------------------------------------------
+// PANIER DE DEVIS (MULTI-ARTICLES)
+// -----------------------------------------------------
+const panierDevis = [];
+
+function lignePanier(item) {
+  const { product, variant } = findVariant(item.id);
+  const isWeight = product.measure === "weight";
+  return {
+    nom: variant.option[LANG],
+    label: isWeight ? T.quantity : T.perimeter,
+    symbol: isWeight ? T.kg : T.meter,
+    unite: product.cartUnit[LANG]
+  };
+}
+
+function ajouterArticleDevis() {
+  const select = document.getElementById("devis-produit");
+  const input = document.getElementById("devis-longueur");
+  const valeur = parseFloat(String(input.value).replace(",", "."));
+
+  if (isNaN(valeur) || valeur <= 0) {
+    alert(T.invalidQty);
+    input.focus();
+    return;
+  }
+
+  const found = findVariant(select.value);
+  if (!found) return;
+  const { product, variant } = found;
+
+  // Rouleaux / panneaux : arrondi à l'unité supérieure. Fil au kg : poids exact.
+  const quantite = product.measure === "weight"
+    ? Math.round(valeur * 100) / 100
+    : Math.ceil(valeur / variant.cover);
+
+  panierDevis.push({
+    id: variant.id,
+    valeur,
+    quantite,
+    prixTotal: Math.round(quantite * variant.price * 100) / 100
+  });
+
+  input.value = "";
+  afficherPanier();
+}
+
+function afficherPanier() {
+  const liste = document.getElementById("panier-liste");
+  const totalPrix = document.getElementById("panier-total-prix");
+  const zonePanier = document.getElementById("zone-panier");
+
+  liste.textContent = "";
+  let total = 0;
+
+  panierDevis.forEach((article, index) => {
+    total += article.prixTotal;
+    const l = lignePanier(article);
+
+    liste.appendChild(
+      el("li", { class: "panier-item" }, [
+        el("div", {}, [
+          el("strong", { class: "panier-item-nom", text: l.nom }),
+          el("span", { class: "panier-item-detail" }, [
+            `${l.label}: ${article.valeur}${l.symbol} → `,
+            el("b", { text: `${article.quantite} ${l.unite}` })
+          ])
+        ]),
+        el("div", { class: "panier-item-actions" }, [
+          el("strong", { class: "panier-item-prix", dir: "ltr", text: formatTotal(article.prixTotal) }),
+          el("button", { type: "button", class: "panier-supprimer", "data-index": index, "aria-label": `${T.remove} — ${l.nom}`, title: T.remove, text: "×" })
+        ])
+      ])
+    );
+  });
+
+  totalPrix.textContent = formatTotal(total);
+  zonePanier.hidden = panierDevis.length === 0;
+}
+
+function finaliserDemandeDevis() {
+  if (panierDevis.length === 0) return;
+
+  let message = T.waIntro;
+  let total = 0;
+
+  panierDevis.forEach((article) => {
+    const l = lignePanier(article);
+    message += `- ${l.nom} (${l.label}: ${article.valeur}${l.symbol}) => ${article.quantite} ${l.unite} : ${formatTotal(article.prixTotal)}\n`;
+    total += article.prixTotal;
+  });
+
+  message += `\n${T.waTotal} : ${formatTotal(total)}`;
+
+  const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, "_blank", "noopener");
+}
+
+// -----------------------------------------------------
+// INITIALISATION
+// -----------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  // Lenis smooth scroll (désactivé si l'utilisateur préfère moins d'animations)
+  if (typeof Lenis !== "undefined" && !REDUCED_MOTION) {
+    lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1.1, smoothWheel: true });
+    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+
+    // Liens d'ancre (#products, #contact…) via Lenis, en tenant compte de la barre de navigation
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        const target = id === "#top" ? 0 : document.querySelector(id);
+        if (target === null) return;
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: target === 0 ? 0 : -90 });
+      });
+    });
+  }
+
+  // Préchargeur : jamais plus de 1,2 s, et sauté lors des visites suivantes
+  // (la classe "no-intro" est posée dans le <head> de la page)
   const preloader = document.getElementById("preloader");
   if (preloader) {
-    window.addEventListener("load", () => {
-      setTimeout(() => preloader.classList.add("is-done"), 700);
-    });
-    setTimeout(() => preloader.classList.add("is-done"), 2500);
+    const hide = () => preloader.classList.add("is-done");
+    if (document.documentElement.classList.contains("no-intro") || REDUCED_MOTION) {
+      hide();
+    } else {
+      window.addEventListener("load", () => setTimeout(hide, 300));
+      setTimeout(hide, 1200);
+    }
   }
 
   // Année dynamique
@@ -29,9 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Horloge en temps réel
   const clockEl = document.getElementById("clock");
   if (clockEl) {
-    function updateClock() {
-      clockEl.textContent = new Date().toLocaleTimeString("fr-FR");
-    }
+    const updateClock = () => { clockEl.textContent = new Date().toLocaleTimeString("fr-FR"); };
     setInterval(updateClock, 1000);
     updateClock();
   }
@@ -39,397 +342,254 @@ document.addEventListener("DOMContentLoaded", () => {
   // Barre de progression
   const scrollProgress = document.getElementById("scrollProgress");
   if (scrollProgress) {
-    window.addEventListener("scroll", () => {
+    const updateProgress = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      scrollProgress.style.width = (window.scrollY / totalHeight) * 100 + "%";
-    });
+      scrollProgress.style.width = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 + "%" : "0%";
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
   }
 
-  // Observer pour l'apparition au scroll
+  // Apparition des titres au scroll
   const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-in");
         obs.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-  document.querySelectorAll("[data-reveal], .reveal-line").forEach(el => observer.observe(el));
+  document.querySelectorAll(".reveal-line").forEach((n) => observer.observe(n));
 
   // -----------------------------------------------------
-  // LOGIQUE DE FILTRAGE DU CATALOGUE PRODUITS
+  // CATALOGUE : rendu + filtres
   // -----------------------------------------------------
-  const catBtns = document.querySelectorAll('.filter-btn');
-  const subCatBtns = document.querySelectorAll('.sub-filter-btn');
-  const subFilterGroup = document.getElementById('subFilters');
-  const productCards = document.querySelectorAll('.product-card[data-cat]');
+  const productGrid = document.getElementById("productGrid");
+  if (productGrid && typeof STCS_PRODUCTS !== "undefined") {
+    STCS_PRODUCTS.forEach((p) => productGrid.appendChild(renderProductCard(p)));
+  }
+
+  const catBtns = document.querySelectorAll(".filter-btn");
+  const subCatBtns = document.querySelectorAll(".sub-filter-btn");
+  const subFilterGroup = document.getElementById("subFilters");
+  const productCards = document.querySelectorAll(".product-card[data-cat]");
 
   function applyProductFilters() {
-    const activeCatBtn = document.querySelector('.filter-btn.is-active');
+    const activeCatBtn = document.querySelector(".filter-btn.is-active");
     if (!activeCatBtn) return;
-    const activeCat = activeCatBtn.getAttribute('data-cat');
-    
-    let activeSubCat = null;
-    
-    if (activeCat === 'grillages') {
-      if(subFilterGroup) subFilterGroup.classList.remove('is-hidden');
-      const activeSubBtn = document.querySelector('.sub-filter-btn.is-active');
-      if (activeSubBtn) activeSubCat = activeSubBtn.getAttribute('data-subcat');
-    } else {
-      if(subFilterGroup) subFilterGroup.classList.add('is-hidden');
-    }
+    const activeCat = activeCatBtn.dataset.cat;
+    const activeSubBtn = document.querySelector(".sub-filter-btn.is-active");
+    const activeSubCat = activeCat === "grillages" && activeSubBtn ? activeSubBtn.dataset.subcat : null;
 
-    productCards.forEach(card => {
-      const cardCat = card.getAttribute('data-cat');
-      const cardSubcat = card.getAttribute('data-subcat');
+    if (subFilterGroup) subFilterGroup.classList.toggle("is-hidden", activeCat !== "grillages");
 
-      if (activeCat === 'accessoires' && cardCat === 'accessoires') {
-        card.style.display = 'flex';
-      } else if (activeCat === 'grillages' && cardCat === 'grillages' && cardSubcat === activeSubCat) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
+    productCards.forEach((card) => {
+      const visible = card.dataset.cat === activeCat && (activeSubCat === null || card.dataset.subcat === activeSubCat);
+      card.hidden = !visible;
     });
   }
 
-  catBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      catBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      applyProductFilters();
+  function bindFilterButtons(buttons) {
+    buttons.forEach((btn) => {
+      btn.setAttribute("aria-pressed", btn.classList.contains("is-active") ? "true" : "false");
+      btn.addEventListener("click", () => {
+        buttons.forEach((b) => { b.classList.remove("is-active"); b.setAttribute("aria-pressed", "false"); });
+        btn.classList.add("is-active");
+        btn.setAttribute("aria-pressed", "true");
+        applyProductFilters();
+      });
     });
-  });
-
-  subCatBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      subCatBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      applyProductFilters();
-    });
-  });
-
-  if (catBtns.length > 0) applyProductFilters();
+  }
+  bindFilterButtons(catBtns);
+  bindFilterButtons(subCatBtns);
+  applyProductFilters();
 
   // -----------------------------------------------------
   // CARROUSEL D'IMAGES DANS LES CARTES PRODUITS
+  // (toujours en LTR, voir styles.css, pour un comportement identique FR/AR)
   // -----------------------------------------------------
-  const carousels = document.querySelectorAll('.pc-media');
-  carousels.forEach(carousel => {
-    const container = carousel.querySelector('.carousel-container');
+  document.querySelectorAll(".pc-media").forEach((carousel) => {
+    const container = carousel.querySelector(".carousel-container");
     if (!container) return;
-    const slides = container.querySelectorAll('.carousel-slide');
-    const dots = carousel.querySelectorAll('.carousel-dot');
-    const prevBtn = carousel.querySelector('.carousel-prev');
-    const nextBtn = carousel.querySelector('.carousel-next');
+    const slides = container.querySelectorAll(".carousel-slide");
+    const dots = carousel.querySelectorAll(".carousel-dot");
     let currentIndex = 0;
 
-    function updateCarousel(index) {
-      if (index < 0) index = slides.length - 1;
-      if (index >= slides.length) index = 0;
-      currentIndex = index;
-      container.scrollTo({
-        left: slides[currentIndex].offsetLeft,
-        behavior: 'smooth'
-      });
+    function setDots(index) {
       dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentIndex);
+        dot.classList.toggle("active", i === index);
+        if (i === index) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
       });
     }
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(currentIndex + 1);
-      });
+    function goTo(index) {
+      currentIndex = (index + slides.length) % slides.length;
+      container.scrollTo({ left: currentIndex * container.clientWidth, behavior: REDUCED_MOTION ? "auto" : "smooth" });
+      setDots(currentIndex);
     }
 
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(currentIndex - 1);
-      });
-    }
+    const prevBtn = carousel.querySelector(".carousel-prev");
+    const nextBtn = carousel.querySelector(".carousel-next");
+    if (prevBtn) prevBtn.addEventListener("click", () => goTo(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener("click", () => goTo(currentIndex + 1));
+    dots.forEach((dot, i) => dot.addEventListener("click", () => goTo(i)));
 
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(i);
-      });
-    });
-
-    container.addEventListener('scroll', () => {
+    // Synchronise les points quand l'utilisateur glisse au doigt
+    container.addEventListener("scroll", () => {
       const index = Math.round(container.scrollLeft / container.clientWidth);
       if (index !== currentIndex && index >= 0 && index < slides.length) {
         currentIndex = index;
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentIndex);
-        });
+        setDots(currentIndex);
       }
-    });
+    }, { passive: true });
   });
 
   // -----------------------------------------------------
-  // SLIDER GALERIE (Défilement automatique et flèches)
+  // GALERIE : rendu, défilement automatique et flèches
   // -----------------------------------------------------
-  const galleryTrack = document.getElementById('galleryTrack');
-  if (galleryTrack) {
-    const prevArrow = document.querySelector('.gallery-prev');
-    const nextArrow = document.querySelector('.gallery-next');
-    const scrollAmount = 324; // 300px + 24px gap
-    const isRTL = document.documentElement.dir === 'rtl';
-    
-    if (nextArrow) {
-      nextArrow.addEventListener('click', () => {
-        galleryTrack.scrollBy({ left: isRTL ? -scrollAmount : scrollAmount, behavior: 'smooth' });
-      });
-    }
-    if (prevArrow) {
-      prevArrow.addEventListener('click', () => {
-        galleryTrack.scrollBy({ left: isRTL ? scrollAmount : -scrollAmount, behavior: 'smooth' });
-      });
-    }
+  const galleryTrack = document.getElementById("galleryTrack");
+  if (galleryTrack && typeof STCS_GALLERY !== "undefined") {
+    const total = STCS_GALLERY.length;
+    STCS_GALLERY.forEach((name, i) => {
+      galleryTrack.appendChild(
+        el("button", { type: "button", class: "gallery-item", "data-index": i, "aria-label": T.galleryAlt(i + 1, total) }, [
+          el("img", {
+            src: `assets/images-catalogue/thumbs/${name}.webp`,
+            "data-full": `assets/images-catalogue/${name}.jpg`,
+            alt: T.galleryAlt(i + 1, total),
+            loading: "lazy",
+            decoding: "async",
+            width: 300,
+            height: 300
+          })
+        ])
+      );
+    });
+
+    const prevArrow = document.querySelector(".gallery-prev");
+    const nextArrow = document.querySelector(".gallery-next");
+    const step = () => {
+      const item = galleryTrack.querySelector(".gallery-item");
+      const gap = parseFloat(getComputedStyle(galleryTrack).columnGap) || 0;
+      return item ? item.offsetWidth + gap : 324;
+    };
+    const behavior = REDUCED_MOTION ? "auto" : "smooth";
+
+    if (nextArrow) nextArrow.addEventListener("click", () => galleryTrack.scrollBy({ left: step(), behavior }));
+    if (prevArrow) prevArrow.addEventListener("click", () => galleryTrack.scrollBy({ left: -step(), behavior }));
 
     function scrollGallery() {
-      if (isRTL) {
-        if (Math.abs(galleryTrack.scrollLeft) >= galleryTrack.scrollWidth - galleryTrack.clientWidth - 10) {
-          galleryTrack.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          galleryTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        }
+      if (galleryTrack.scrollLeft >= galleryTrack.scrollWidth - galleryTrack.clientWidth - 10) {
+        galleryTrack.scrollTo({ left: 0, behavior });
       } else {
-        if (galleryTrack.scrollLeft >= galleryTrack.scrollWidth - galleryTrack.clientWidth - 10) {
-          galleryTrack.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          galleryTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
+        galleryTrack.scrollBy({ left: step(), behavior });
       }
     }
 
-    let autoScroll = setInterval(scrollGallery, 3500);
+    // Défilement auto seulement si la galerie est visible, que l'onglet est actif,
+    // et que l'utilisateur n'interagit pas avec (souris, clavier, doigt).
+    if (!REDUCED_MOTION) {
+      let timer = null;
+      let inView = false;
+      let pausedUntil = 0;
+      let hovering = false;
 
-    const galleryWrapper = document.querySelector('.gallery-slider-wrapper');
-    if (galleryWrapper) {
-      galleryWrapper.addEventListener('mouseenter', () => clearInterval(autoScroll));
-      galleryWrapper.addEventListener('mouseleave', () => {
-        autoScroll = setInterval(scrollGallery, 3500);
-      });
+      const shouldRun = () => inView && !hovering && !document.hidden && !activeDialog && Date.now() >= pausedUntil;
+      const tick = () => { if (shouldRun()) scrollGallery(); };
+      const start = () => { if (!timer) timer = setInterval(tick, 3500); };
+      const stop = () => { clearInterval(timer); timer = null; };
+      const pauseFor = (ms) => { pausedUntil = Date.now() + ms; };
+
+      new IntersectionObserver((entries) => {
+        inView = entries[0].isIntersecting;
+        inView ? start() : stop();
+      }, { threshold: 0.25 }).observe(galleryTrack);
+
+      const wrapper = document.querySelector(".gallery-slider-wrapper") || galleryTrack;
+      wrapper.addEventListener("mouseenter", () => { hovering = true; });
+      wrapper.addEventListener("mouseleave", () => { hovering = false; });
+      wrapper.addEventListener("focusin", () => { hovering = true; });
+      wrapper.addEventListener("focusout", () => { hovering = false; });
+      wrapper.addEventListener("touchstart", () => pauseFor(8000), { passive: true });
+      [prevArrow, nextArrow].forEach((b) => b && b.addEventListener("click", () => pauseFor(8000)));
     }
   }
 
   // -----------------------------------------------------
   // LIGHTBOX (AGRANDISSEMENT DES IMAGES DE LA GALERIE)
   // -----------------------------------------------------
-  const galleryItems = document.querySelectorAll('.gallery-item img');
-  const lightbox = document.getElementById('lightbox');
-  
+  const galleryItems = document.querySelectorAll(".gallery-item");
+  const lightbox = document.getElementById("lightbox");
+
   if (lightbox && galleryItems.length > 0) {
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeBtn = document.querySelector('.lightbox-close');
-    const prevBtn = document.querySelector('.lightbox-prev');
-    const nextBtn = document.querySelector('.lightbox-next');
+    const lightboxImg = document.getElementById("lightbox-img");
+    const total = galleryItems.length;
     let currentIndex = 0;
 
-    galleryItems.forEach((img, index) => {
-      img.parentElement.addEventListener('click', () => {
-        currentIndex = index;
-        showImage(currentIndex);
-        lightbox.classList.add('is-active');
-        document.body.style.overflow = "hidden";
+    function showImage(index) {
+      currentIndex = (index + total) % total;
+      const img = galleryItems[currentIndex].querySelector("img");
+      lightboxImg.src = img.dataset.full || img.src;
+      lightboxImg.alt = T.lightboxAlt(currentIndex + 1, total);
+    }
+
+    galleryItems.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        showImage(index);
+        openDialog(lightbox, "is-active");
       });
     });
 
-    function showImage(index) {
-      if (index >= galleryItems.length) currentIndex = 0;
-      if (index < 0) currentIndex = galleryItems.length - 1;
-      lightboxImg.src = galleryItems[currentIndex].src;
-    }
+    lightbox.querySelector(".lightbox-close").addEventListener("click", closeDialog);
+    lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeDialog(); });
+    lightbox.querySelector(".lightbox-next").addEventListener("click", () => showImage(currentIndex + 1));
+    lightbox.querySelector(".lightbox-prev").addEventListener("click", () => showImage(currentIndex - 1));
 
-    function closeLightbox() {
-      lightbox.classList.remove('is-active');
-      document.body.style.overflow = "auto";
-    }
-
-    closeBtn.addEventListener('click', closeLightbox);
-    
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
+    document.addEventListener("keydown", (e) => {
+      if (!lightbox.classList.contains("is-active")) return;
+      if (e.key === "ArrowRight") showImage(currentIndex + 1);
+      if (e.key === "ArrowLeft") showImage(currentIndex - 1);
     });
 
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex++;
-      showImage(currentIndex);
-    });
+    // Glisser au doigt pour changer d'image
+    let touchX = null;
+    lightbox.addEventListener("touchstart", (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+    lightbox.addEventListener("touchend", (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) showImage(currentIndex + (dx < 0 ? 1 : -1));
+      touchX = null;
+    }, { passive: true });
+  }
 
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex--;
-      showImage(currentIndex);
-    });
+  // -----------------------------------------------------
+  // MODALE DE DEVIS
+  // -----------------------------------------------------
+  const modale = document.getElementById("modale-devis");
+  const select = document.getElementById("devis-produit");
+  if (select && typeof STCS_PRODUCTS !== "undefined") renderQuoteOptions(select);
 
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('is-active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') { currentIndex++; showImage(currentIndex); }
-      if (e.key === 'ArrowLeft') { currentIndex--; showImage(currentIndex); }
+  document.querySelectorAll("[data-open-modal]").forEach((btn) => {
+    btn.addEventListener("click", () => openDialog(document.getElementById(btn.dataset.openModal), "is-open"));
+  });
+
+  if (modale) {
+    modale.querySelector(".modale-fermer").addEventListener("click", closeDialog);
+    modale.addEventListener("click", (e) => { if (e.target === modale) closeDialog(); });
+
+    document.getElementById("devis-ajouter").addEventListener("click", ajouterArticleDevis);
+    document.getElementById("devis-longueur").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); ajouterArticleDevis(); }
+    });
+    document.getElementById("devis-envoyer").addEventListener("click", finaliserDemandeDevis);
+
+    document.getElementById("panier-liste").addEventListener("click", (e) => {
+      const btn = e.target.closest(".panier-supprimer");
+      if (!btn) return;
+      panierDevis.splice(Number(btn.dataset.index), 1);
+      afficherPanier();
+      document.getElementById("devis-longueur").focus();
     });
   }
 });
-
-// -----------------------------------------------------
-// GESTION DES MODALES
-// -----------------------------------------------------
-function ouvrirModale(id) {
-  const modale = document.getElementById(id);
-  if (modale) {
-    modale.classList.add("is-open");
-    document.body.style.overflow = "hidden";
-  }
-}
-
-function fermerModale(id) {
-  const modale = document.getElementById(id);
-  if (modale) {
-    modale.classList.remove("is-open");
-    document.body.style.overflow = "auto";
-  }
-}
-
-window.addEventListener("click", (event) => {
-  if (event.target.classList.contains("modale")) {
-    event.target.classList.remove("is-open");
-    document.body.style.overflow = "auto";
-  }
-});
-
-// -----------------------------------------------------
-// GESTION DU PANIER DE DEVIS (MULTI-ARTICLES)
-// -----------------------------------------------------
-let panierDevis = [];
-
-function ajouterArticleDevis() {
-  const select = document.getElementById('devis-produit');
-  const input = document.getElementById('devis-longueur');
-  const longueur = parseFloat(input.value);
-
-  const isAR = document.documentElement.dir === 'rtl';
-
-  if (isNaN(longueur) || longueur <= 0) {
-    alert(isAR ? "الرجاء إدخال طول أو كمية صحيحة." : "Veuillez saisir une longueur ou une quantité valide.");
-    return;
-  }
-
-  const option = select.options[select.selectedIndex];
-  // Récupérer le nom du produit sans le prix
-  const nomProduit = option.text.split(' - ')[0]; 
-  const longueurProduit = parseFloat(option.getAttribute('data-longueur'));
-  const prixUnitaire = parseFloat(option.getAttribute('data-prix'));
-  const nomUnite = option.getAttribute('data-unite');
-
-  // Application de la règle : Arrondi à l'entier supérieur
-  const quantite = Math.ceil(longueur / longueurProduit);
-  const prixTotal = quantite * prixUnitaire;
-
-  // Ajout au panier
-  panierDevis.push({
-    nom: nomProduit,
-    longueur: longueur,
-    quantite: quantite,
-    unite: nomUnite,
-    prixUnitaire: prixUnitaire,
-    prixTotal: prixTotal
-  });
-
-  // Vider le champ de saisie
-  input.value = '';
-  
-  // Mettre à jour l'interface
-  afficherPanier();
-}
-
-function afficherPanier() {
-  const liste = document.getElementById('panier-liste');
-  const totalPrix = document.getElementById('panier-total-prix');
-  const zonePanier = document.getElementById('zone-panier');
-  
-  liste.innerHTML = '';
-  let total = 0;
-  const isAR = document.documentElement.dir === 'rtl';
-
-  panierDevis.forEach((article, index) => {
-    total += article.prixTotal;
-    
-    const li = document.createElement('li');
-    li.style.cssText = "padding: 12px 0; border-bottom: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px;";
-    
-    // Création des détails de l'article
-    const details = document.createElement('div');
-    const metricLabel = article.unite === 'kg' ? (isAR ? 'الكمية:' : 'Quantité:') : (isAR ? 'المحيط:' : 'Périmètre:');
-    const metricSymbol = article.unite === 'kg' ? (isAR ? 'كغ' : 'kg') : (isAR ? 'م' : 'm');
-    
-    details.innerHTML = `
-      <strong style="display:block; color:var(--ink); font-size:15px; margin-bottom:4px;">${article.nom}</strong>
-      <span style="font-size:13px; color:var(--mute);">${metricLabel} ${article.longueur}${metricSymbol} &rarr; <b>${article.quantite} ${article.unite}</b></span>
-    `;
-    
-    // Création du prix et du bouton de suppression
-    const actionPrix = document.createElement('div');
-    actionPrix.style.cssText = "display: flex; align-items: center; gap: 16px;";
-    actionPrix.innerHTML = `
-      <strong style="color:var(--green); font-family:var(--f-display); font-size:16px;" dir="ltr">${article.prixTotal.toFixed(2)} DT</strong>
-      <button onclick="supprimerArticle(${index})" style="background:rgba(255,0,0,0.08); color:red; border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:background 0.3s;" title="Supprimer">&times;</button>
-    `;
-    
-    li.appendChild(details);
-    li.appendChild(actionPrix);
-    liste.appendChild(li);
-  });
-
-  totalPrix.textContent = total.toFixed(2) + " DT";
-
-  // Afficher ou cacher la zone du panier selon son contenu
-  if (panierDevis.length > 0) {
-    zonePanier.style.display = 'block';
-  } else {
-    zonePanier.style.display = 'none';
-  }
-}
-
-function supprimerArticle(index) {
-  panierDevis.splice(index, 1);
-  afficherPanier();
-}
-
-// Fonction finale appelée lors du clic sur "Demander un devis final"
-function finaliserDemandeDevis() {
-  if (panierDevis.length === 0) return;
-  
-  const isAR = document.documentElement.dir === 'rtl';
-  let message = isAR 
-    ? "مرحباً STCS، أود طلب تسعيرة للمنتجات التالية:\n\n" 
-    : "Bonjour STCS, je souhaite un devis pour :\n\n";
-    
-  let total = 0;
-  
-  panierDevis.forEach(article => {
-    const metricLabel = article.unite === 'kg' ? (isAR ? 'الكمية' : 'Quantité') : (isAR ? 'المحيط' : 'Périmètre');
-    const metricSymbol = article.unite === 'kg' ? (isAR ? 'كغ' : 'kg') : (isAR ? 'م' : 'm');
-    
-    if (isAR) {
-      message += `- ${article.nom} (${metricLabel}: ${article.longueur}${metricSymbol}) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
-    } else {
-      message += `- ${article.nom} (${metricLabel}: ${article.longueur}${metricSymbol}) => ${article.quantite} ${article.unite} : ${article.prixTotal.toFixed(2)} DT\n`;
-    }
-    total += article.prixTotal;
-  });
-  
-  message += isAR 
-    ? `\nالمجموع التقديري : ${total.toFixed(2)} DT`
-    : `\nTotal estimé : ${total.toFixed(2)} DT`;
-    
-  // Ouvre WhatsApp avec le devis complet formaté
-  const waUrl = `https://wa.me/21628545844?text=${encodeURIComponent(message)}`;
-  window.open(waUrl, '_blank');
-}

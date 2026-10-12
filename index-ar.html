@@ -3,28 +3,85 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>STCS — الشركة التونسية للتسييج والأمان</title>
-<meta name="description" content="الشركة التونسية للتسييج والأمان — شباك، أسلاك مجلفنة، أسلاك شائكة وحلول الحماية في تونس." />
+<title>STCS — التسييج والأمان | شباك، سلك شائك وسلك مجلفن في تونس</title>
+<meta name="description" content="الشركة التونسية للتسييج والأمان — شباك بسيط ومزدوج الفتل، ألواح سياج صلبة، أسلاك مجلفنة وأسلاك شائكة. توصيل لكامل تونس وتسعيرة مجانية عبر واتساب." />
+<meta name="theme-color" content="#14442f" />
+
+<!-- المشاركة (فيسبوك، واتساب…) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="STCS" />
+<meta property="og:title" content="STCS — التسييج والأمان في تونس" />
+<meta property="og:description" content="شباك، ألواح صلبة، سلك مجلفن وسلك شائك. تسعيرة فورية وتوصيل لكامل تونس." />
+<meta property="og:url" content="https://www.stcs.tn/index-ar.html" />
+<meta property="og:image" content="https://www.stcs.tn/assets/brand/logo.jpg" />
+<meta property="og:locale" content="ar_TN" />
+<meta property="og:locale:alternate" content="fr_TN" />
+<meta name="twitter:card" content="summary" />
+
+<link rel="canonical" href="https://www.stcs.tn/index-ar.html" />
+<link rel="alternate" hreflang="fr" href="https://www.stcs.tn/" />
+<link rel="alternate" hreflang="ar" href="https://www.stcs.tn/index-ar.html" />
+<link rel="alternate" hreflang="x-default" href="https://www.stcs.tn/" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/products/simple-torsion-2.webp" />
 <link rel="stylesheet" href="styles.css" />
+<script>
+  /* Avant l'affichage : active les animations JS et saute l'intro si déjà vue dans cette session */
+  (function (d) {
+    d.classList.add("js");
+    try {
+      if (sessionStorage.getItem("stcs-intro") === "1") d.classList.add("no-intro");
+      else sessionStorage.setItem("stcs-intro", "1");
+    } catch (e) {}
+  })(document.documentElement);
+</script>
 <link rel="icon" type="image/jpeg" href="assets/brand/logo.jpg" />
-<style>
-  [dir="rtl"] { --f-display: 'Cairo', sans-serif; --f-sans: 'Cairo', sans-serif; }
-  [dir="rtl"] .hero-title { font-size: clamp(32px, 6vw, 85px); font-weight: 700; line-height: 1.2; }
-  [dir="rtl"] .section-title { font-size: clamp(28px, 4vw, 60px); font-weight: 700; line-height: 1.3; }
-</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OnlineStore",
+  "name": "STCS — الشركة التونسية للتسييج والأمان",
+  "alternateName": "STCS",
+  "description": "تصنيع وتوزيع الشباك، ألواح السياج الصلبة، الأسلاك المجلفنة والأسلاك الشائكة في تونس.",
+  "url": "https://www.stcs.tn/index-ar.html",
+  "logo": "https://www.stcs.tn/assets/brand/logo.jpg",
+  "image": "https://www.stcs.tn/assets/products/simple-torsion-2.webp",
+  "telephone": "+216 28 545 844",
+  "email": "stcs@stcs.tn",
+  "inLanguage": "ar",
+  "areaServed": { "@type": "Country", "name": "تونس" },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "telephone": "+216 28 545 844",
+    "email": "stcs@stcs.tn",
+    "availableLanguage": ["French", "Arabic"],
+    "areaServed": "TN",
+    "hoursAvailable": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  },
+  "sameAs": ["https://www.facebook.com/profile.php?id=61593095852095"]
+}
+</script>
 </head>
 <body>
+
+<a class="skip-link" href="#products">الانتقال إلى الكتالوج</a>
 
 <div class="grain" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <!-- Preloader -->
-<div class="preloader" id="preloader">
+<div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader-inner">
-    <div class="preloader-logo">
+    <div class="preloader-logo" dir="ltr">
       <span class="pl-letter">S</span><span class="pl-letter">T</span><span class="pl-letter">C</span><span class="pl-letter">S</span>
     </div>
     <div class="preloader-bar"><span></span></div>
@@ -35,24 +92,24 @@
 <!-- NAV -->
 <header class="nav" id="nav">
   <a href="#top" class="nav-brand">
-    <img src="assets/brand/logo.jpg" alt="STCS" />
+    <img src="assets/brand/logo.jpg" alt="" width="34" height="34" />
     <span>STCS</span>
   </a>
-  <nav class="nav-links">
+  <nav class="nav-links" aria-label="القائمة الرئيسية">
     <a href="#products"><span>01</span> منتجاتنا</a>
     <a href="#gallery"><span>02</span> معرض الصور</a>
     <a href="#contact"><span>03</span> اتصل بنا</a>
   </nav>
   <div class="nav-actions">
     <div class="lang-switcher">
-      <a href="index.html">FR</a>
-      <span class="separator">/</span>
-      <a href="index-ar.html" class="active">AR</a>
+      <a href="index.html" hreflang="fr" lang="fr" aria-label="Français">FR</a>
+      <span class="separator" aria-hidden="true">/</span>
+      <a href="index-ar.html" class="active" aria-current="page" lang="ar">AR</a>
     </div>
-    <a href="javascript:void(0)" onclick="ouvrirModale('modale-devis')" class="nav-cta">
+    <button type="button" class="nav-cta" data-open-modal="modale-devis" aria-haspopup="dialog">
       <span>طلب تسعيرة</span>
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>
-    </a>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>
+    </button>
   </div>
 </header>
 
@@ -66,7 +123,7 @@
     </div>
     <div class="hero-meta">
       <span class="pill"><i></i> تونس · متوفر في كامل الجمهورية</span>
-      <span class="clock" id="clock">--:--:--</span>
+      <span class="clock" id="clock" aria-hidden="true">--:--:--</span>
     </div>
     <h1 class="hero-title">
       <span class="line"><span class="reveal">سياج متين</span></span>
@@ -75,7 +132,7 @@
     </h1>
     <div class="hero-foot">
       <div class="hero-brand">
-        <img src="assets/brand/logo.jpg" alt="STCS logo" class="hero-logo" />
+        <img src="assets/brand/logo.jpg" alt="شعار STCS" class="hero-logo" width="90" height="90" />
         <div>
           <p class="hero-kicker">STCS · الشركة التونسية للتسييج والأمان</p>
           <p class="hero-sub">تصنيع وتوزيع أسلاك التسييج، الشباك وإكسسوارات الحماية في جميع أنحاء تونس.</p>
@@ -83,13 +140,13 @@
       </div>
       <a href="#products" class="scroll-hint">
         <span>تصفح الكتالوج</span>
-        <span class="scroll-hint-arrow"></span>
+        <span class="scroll-hint-arrow" aria-hidden="true"></span>
       </a>
     </div>
   </section>
 
   <!-- STATS -->
-  <section class="stats">
+  <section class="stats" aria-label="أرقام رئيسية">
     <div class="stat"><span class="stat-num">5</span><span class="plus">+</span><p>سنوات خبرة</p></div>
     <div class="stat"><span class="stat-num">100</span><span class="plus">+</span><p>مشاريع منجزة</p></div>
     <div class="stat"><span class="stat-num">100</span><span class="plus">%</span><p>جودة تونسية خالصة</p></div>
@@ -97,219 +154,47 @@
 
   <!-- PRODUCTS & FILTERS -->
   <section class="products" id="products">
-    <div class="section-head" style="text-align: center;">
+    <div class="section-head section-head--center">
       <span class="eyebrow">01 — الكتالوج</span>
-      <h2 class="section-title" style="margin-bottom: 20px;">
+      <h2 class="section-title">
         <span class="reveal-line">منتجاتنا</span>
       </h2>
     </div>
 
     <!-- UI FILTRES AR -->
     <div class="catalog-filters">
-      <div class="filter-group">
-        <button class="filter-btn is-active" data-cat="grillages">شباك تسييج (Grillages)</button>
-        <button class="filter-btn" data-cat="accessoires">إكسسوارات (Accessoires)</button>
+      <div class="filter-group" role="group" aria-label="الصنف">
+        <button type="button" class="filter-btn is-active" data-cat="grillages">شباك تسييج (Grillages)</button>
+        <button type="button" class="filter-btn" data-cat="accessoires">إكسسوارات (Accessoires)</button>
       </div>
-      <div class="sub-filter-group" id="subFilters">
-        <button class="sub-filter-btn is-active" data-subcat="simple">شباك بسيط الفتل</button>
-        <button class="sub-filter-btn" data-subcat="double">شباك مزدوج الفتل</button>
-        <button class="sub-filter-btn" data-subcat="rigide">شباك صلب (Panneaux)</button>
+      <div class="sub-filter-group" id="subFilters" role="group" aria-label="نوع الشباك">
+        <button type="button" class="sub-filter-btn is-active" data-subcat="simple">شباك بسيط الفتل</button>
+        <button type="button" class="sub-filter-btn" data-subcat="double">شباك مزدوج الفتل</button>
+        <button type="button" class="sub-filter-btn" data-subcat="rigide">شباك صلب (Panneaux)</button>
       </div>
     </div>
 
-    <div class="product-grid" id="productGrid">
-
-      <!-- 1. Simple Torsion -->
-      <article class="product-card" data-cat="grillages" data-subcat="simple">
-        <div class="pc-media">
-          <div class="carousel-container">
-            <div class="carousel-slide"><img src="assets/products/simple%20torsion.jpg" alt="Simple Torsion" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/simple%20torsion1.jpg" alt="Simple Torsion" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/simple%20torsion2.jpg" alt="Simple Torsion" loading="lazy" /></div>
-          </div>
-          <button class="carousel-btn carousel-prev">&#10094;</button>
-          <button class="carousel-btn carousel-next">&#10095;</button>
-          <div class="carousel-dots">
-            <button class="carousel-dot active"></button>
-            <button class="carousel-dot"></button>
-            <button class="carousel-dot"></button>
-          </div>
-        </div>
-        <div class="pc-body">
-          <div>
-            <span class="pc-cat">صنف : بسيط الفتل (Simple Torsion)</span>
-            <h3>شباك التسييج البسيط</h3>
-            <p>شباك مرن واقتصادي مثالي للمزارع والحدائق. مقاوم للصدأ وسهل التركيب.</p>
-          </div>
-          <div class="product-specs-list">
-            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 25م • 2,0 مم</span> <strong class="spec-price">210 د.ت / لفة</strong></div>
-            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 25م • 2,2 مم</span> <strong class="spec-price">250 د.ت / لفة</strong></div>
-            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 25م • 2,0 مم</span> <strong class="spec-price">250 د.ت / لفة</strong></div>
-            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 25م • 2,2 مم</span> <strong class="spec-price">270 د.ت / لفة</strong></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 2. Double Torsion -->
-      <article class="product-card" data-cat="grillages" data-subcat="double" style="display:none;">
-        <div class="pc-media">
-          <div class="carousel-container">
-            <div class="carousel-slide"><img src="assets/products/double%20torsion.jpg" alt="Double Torsion" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/double%20torsion1.jpg" alt="Double Torsion" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/double%20torsion2.png" alt="Double Torsion" loading="lazy" /></div>
-          </div>
-          <button class="carousel-btn carousel-prev">&#10094;</button>
-          <button class="carousel-btn carousel-next">&#10095;</button>
-          <div class="carousel-dots">
-            <button class="carousel-dot active"></button>
-            <button class="carousel-dot"></button>
-            <button class="carousel-dot"></button>
-          </div>
-        </div>
-        <div class="pc-body">
-          <div>
-            <span class="pc-cat">صنف : مزدوج الفتل (Double Torsion)</span>
-            <h3>شباك مزدوج الفتل</h3>
-            <p>شباك فائق المتانة مصمم للاستخدام المكثف، دعم الجدران، والحماية القصوى.</p>
-          </div>
-          <div class="product-specs-list">
-            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 50م • 1,6 مم</span> <strong class="spec-price">320 د.ت / لفة</strong></div>
-            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 50م • 1,6 مم</span> <strong class="spec-price">220 د.ت / لفة</strong></div>
-            <div class="spec-row"><span>G.M • ارتفاع: 2,0م • طول: 20م • 2,0 مم</span> <strong class="spec-price">135 د.ت / لفة</strong></div>
-            <div class="spec-row"><span>G.M • ارتفاع: 1,5م • طول: 20م • 2,0 مم</span> <strong class="spec-price">120 د.ت / لفة</strong></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 3. Grillage Rigide (Panneaux) -->
-      <article class="product-card" data-cat="grillages" data-subcat="rigide" style="display:none;">
-        <div class="pc-media">
-          <div class="carousel-container">
-            <div class="carousel-slide"><img src="assets/products/panneau-1.jpg" alt="Panneau Rigide" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/panneau-2.jpg" alt="Panneau Rigide" loading="lazy" /></div>
-          </div>
-          <button class="carousel-btn carousel-prev">&#10094;</button>
-          <button class="carousel-btn carousel-next">&#10095;</button>
-          <div class="carousel-dots">
-            <button class="carousel-dot active"></button>
-            <button class="carousel-dot"></button>
-          </div>
-        </div>
-        <div class="pc-body">
-          <div>
-            <span class="pc-cat">صنف : شباك صلب (Grillage Rigide)</span>
-            <h3>ألواح سياج صلبة (Panneaux)</h3>
-            <p>سياج حديث ملحوم مصمم ليجمع بين القوة، المتانة، والمظهر الاحترافي.</p>
-          </div>
-          <div class="product-specs-list">
-            <div class="spec-row"><span>ارتفاع: 1,5م • طول: 2,5م • 4 مم</span> <strong class="spec-price">140 د.ت / لوح</strong></div>
-            <div class="spec-row"><span>ارتفاع: 2,0م • طول: 2,5م • 4 مم</span> <strong class="spec-price">160 د.ت / لوح</strong></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 4. Fil Barbelé -->
-      <article class="product-card" data-cat="accessoires" style="display:none;">
-        <div class="pc-media">
-          <div class="carousel-container">
-            <div class="carousel-slide"><img src="assets/products/fil-barbele-1.jpg" alt="Fil Barbelé" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/fil-barbele-2.jpg" alt="Fil Barbelé" loading="lazy" /></div>
-          </div>
-          <button class="carousel-btn carousel-prev">&#10094;</button>
-          <button class="carousel-btn carousel-next">&#10095;</button>
-          <div class="carousel-dots">
-            <button class="carousel-dot active"></button>
-            <button class="carousel-dot"></button>
-          </div>
-        </div>
-        <div class="pc-body">
-          <div>
-            <span class="pc-cat">صنف : إكسسوارات</span>
-            <h3>سلك شائك</h3>
-            <p>سلك شائك يضمن حماية قصوى لمحيطك. يُباع باللفة (RLX).</p>
-          </div>
-          <div class="product-specs-list">
-            <div class="spec-row"><span>الطول: 200م • 1,6 مم</span> <strong class="spec-price">60 د.ت / لفة</strong></div>
-            <div class="spec-row"><span>الطول: 200م • 1,8 مم</span> <strong class="spec-price">80 د.ت / لفة</strong></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 5. Fil Galvanisé -->
-      <article class="product-card" data-cat="accessoires" style="display:none;">
-        <div class="pc-media">
-          <div class="carousel-container">
-            <div class="carousel-slide"><img src="assets/products/fil-galvanise-1.jpg" alt="Fil Galvanisé" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/fil-galvanise-2.jpg" alt="Fil Galvanisé" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="assets/products/fil-galvanise-3.jpg" alt="Fil Galvanisé" loading="lazy" /></div>
-          </div>
-          <button class="carousel-btn carousel-prev">&#10094;</button>
-          <button class="carousel-btn carousel-next">&#10095;</button>
-          <div class="carousel-dots">
-            <button class="carousel-dot active"></button>
-            <button class="carousel-dot"></button>
-            <button class="carousel-dot"></button>
-          </div>
-        </div>
-        <div class="pc-body">
-          <div>
-            <span class="pc-cat">صنف : إكسسوارات</span>
-            <h3>سلك مجلفن</h3>
-            <p>سلك أملس مجلفن على الساخن لأسلاك الشد أو الاستخدام الزراعي. يُباع بالكيلوغرام.</p>
-          </div>
-          <div class="product-specs-list">
-            <div class="spec-row"><span>السماكة: 1,3 مم</span> <strong class="spec-price">6.5 د.ت / كغ</strong></div>
-            <div class="spec-row"><span>السماكة: 2,7 مم</span> <strong class="spec-price">6 د.ت / كغ</strong></div>
-            <div class="spec-row"><span>السماكة: 4,9 مم</span> <strong class="spec-price">5 د.ت / كغ</strong></div>
-          </div>
-        </div>
-      </article>
-
-    </div>
+    <!-- Les cartes produits sont générées depuis products.js -->
+    <div class="product-grid" id="productGrid" aria-live="polite"></div>
+    <noscript>
+      <p class="noscript-msg">يرجى تفعيل JavaScript لعرض الكتالوج والأسعار، أو اتصلوا بنا على <a href="tel:+21628545844" dir="ltr">28 545 844</a>.</p>
+    </noscript>
   </section>
 
   <!-- GALERIE D'IMAGES SLIDER -->
   <section class="gallery" id="gallery">
-    <div class="section-head" style="text-align: center;">
+    <div class="section-head section-head--center">
       <span class="eyebrow">02 — معرض الصور</span>
-      <h2 class="section-title" style="margin-bottom: 20px;">
+      <h2 class="section-title">
         <span class="reveal-line">صور منتجاتنا ومشاريعنا</span>
       </h2>
     </div>
-    
+
     <div class="gallery-slider-wrapper">
-      <button class="gallery-arrow gallery-prev" aria-label="السابق">&#10094;</button>
-      
-      <div class="gallery-track" id="galleryTrack">
-        <!-- Les noms de fichiers doivent correspondre exactement à ceux présents dans le dossier images-catalogue -->
-        <div class="gallery-item"><img src="assets/images-catalogue/01338795-bb1f-4131-be3f-d21243b180a0.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/06581291-57f6-4cbc-8744-97b2713dc25d.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/20982cc2-c19c-4219-8c89-cc1c63fee3d7.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/3bbed116-a3bd-44f8-a8c8-9ad8b4cfa02e.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/3d64b174-d910-4d99-a7f7-183e6d06b529.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/3ecfc0c2-a2b8-41d0-ab72-cc8af019879b.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/520d0a71-1371-4eac-9f3b-93aa6c4d9c35.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/540ce16c-b070-4b2f-814c-90aeb300b769.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/54de8536-58e6-4b68-af38-03b752409057.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/61843a8c-b379-45bf-be97-400a5e32a5f9.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/6b3ff609-3665-49e1-aca3-527490ded0ed.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/76d2297f-5da6-4991-bf80-dba9a239b669.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/a3a17b51-1d09-4101-9da6-70420243a998.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/a8155929-8661-4ff7-803f-c7968302a473.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/b02d3769-f992-401d-81f5-24158449786b.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/b755da51-4420-4193-8458-62cc646b0237.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/b999b80c-f826-44c4-afe3-ed36bea50bb5.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/ba533a18-679c-4b5d-bc7b-6109ff1af41c.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/bc7624f3-8d6f-4463-b8bb-d7a6725439ed.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/bcebdb94-44e9-4076-ab97-23f984b6860d.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/c2299912-2816-4d3f-a0aa-eb52bffe1d30.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/cef9cb5e-80ea-44fc-8cd5-2a4676541f6e.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/defe9818-6178-4f75-b6ed-91019d9abf98.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/e4e7de17-d385-4b2a-be4e-e73ed8fd98ee.jpg" alt="STCS إنجازات" loading="lazy"></div>
-        <div class="gallery-item"><img src="assets/images-catalogue/ffaed66a-e999-4f5f-b8d8-3370283713b5.jpg" alt="STCS إنجازات" loading="lazy"></div>
-      </div>
-      
-      <button class="gallery-arrow gallery-next" aria-label="التالي">&#10095;</button>
+      <button type="button" class="gallery-arrow gallery-prev" aria-label="الصور السابقة">&#10094;</button>
+      <!-- Les photos sont listées dans products.js (STCS_GALLERY) -->
+      <div class="gallery-track" id="galleryTrack"></div>
+      <button type="button" class="gallery-arrow gallery-next" aria-label="الصور التالية">&#10095;</button>
     </div>
   </section>
 
@@ -320,87 +205,65 @@
       <h2 class="section-title section-title--xl"><span class="reveal-line">لنقم بحماية</span><span class="reveal-line"><em>محيطك.</em></span></h2>
     </div>
     <div class="contact-grid">
-      <a class="contact-tile" href="tel:+21628545844"><span class="ct-label">اتصل بنا عبر الهاتف</span><strong dir="ltr">28 545 844</strong><span class="ct-arrow">↙</span></a>
-      <a class="contact-tile" href="mailto:stcs@stcs.tn"><span class="ct-label">البريد الإلكتروني</span><strong dir="ltr">stcs@stcs.tn</strong><span class="ct-arrow">↙</span></a>
+      <a class="contact-tile" href="tel:+21628545844"><span class="ct-label">اتصل بنا عبر الهاتف</span><strong dir="ltr">28 545 844</strong><span class="ct-arrow" aria-hidden="true">↙</span></a>
+      <a class="contact-tile" href="mailto:stcs@stcs.tn"><span class="ct-label">البريد الإلكتروني</span><strong dir="ltr">stcs@stcs.tn</strong><span class="ct-arrow" aria-hidden="true">↙</span></a>
+      <a class="contact-tile contact-tile--wa" href="https://wa.me/21628545844" target="_blank" rel="noopener noreferrer"><span class="ct-label">واتساب · الطلبات عبر الإنترنت</span><strong>24/24 — 7/7</strong><span class="ct-arrow" aria-hidden="true">↙</span></a>
     </div>
+    <p class="contact-note">متجر إلكتروني مفتوح 24/24 ساعة و7/7 أيام · توصيل لكامل تونس.</p>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-top"><h3 class="footer-mark">STCS.</h3></div>
+    <div class="footer-top"><p class="footer-mark" aria-hidden="true" dir="ltr">STCS.</p></div>
     <div class="footer-bottom"><span>© <span id="year"></span> STCS — الشركة التونسية للتسييج والأمان.</span></div>
   </footer>
 </main>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" class="lightbox">
-  <span class="lightbox-close" aria-label="إغلاق">&times;</span>
-  <button class="lightbox-btn lightbox-prev" aria-label="السابق">&#10094;</button>
-  <img id="lightbox-img" src="" alt="صورة مكبرة" />
-  <button class="lightbox-btn lightbox-next" aria-label="التالي">&#10095;</button>
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="صورة مكبرة" aria-hidden="true">
+  <button type="button" class="lightbox-close" aria-label="إغلاق">&times;</button>
+  <button type="button" class="lightbox-btn lightbox-prev" aria-label="الصورة السابقة">&#10094;</button>
+  <img id="lightbox-img" src="data:," alt="" />
+  <button type="button" class="lightbox-btn lightbox-next" aria-label="الصورة التالية">&#10095;</button>
 </div>
 
 <!-- MODALE DEVIS MULTI-ARTICLES -->
-<div id="modale-devis" class="modale">
-  <div class="modale-contenu" style="max-width: 550px;">
-    <span class="modale-fermer" onclick="fermerModale('modale-devis')">&times;</span>
+<div id="modale-devis" class="modale" role="dialog" aria-modal="true" aria-labelledby="modale-devis-titre" aria-hidden="true">
+  <div class="modale-contenu" data-lenis-prevent>
+    <button type="button" class="modale-fermer" aria-label="إغلاق">&times;</button>
     <div class="modale-header">
-      <h3>حاسبة التسعيرة</h3>
+      <h3 id="modale-devis-titre">حاسبة التسعيرة</h3>
     </div>
-    
-    <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 20px; border-bottom: 2px solid var(--line);">
+
+    <div class="devis-form">
       <div>
-        <label for="devis-produit" style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; display: block;">1. اختر المنتج</label>
-        <select id="devis-produit" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
-          <optgroup label="شباك بسيط الفتل">
-            <option value="st-1" data-longueur="25" data-prix="210" data-unite="لفة">بسيط الفتل (1,5م / 2,0مم) - 210 د.ت</option>
-            <option value="st-2" data-longueur="25" data-prix="250" data-unite="لفة">بسيط الفتل (1,5م / 2,2مم) - 250 د.ت</option>
-            <option value="st-3" data-longueur="25" data-prix="250" data-unite="لفة">بسيط الفتل (2,0م / 2,0مم) - 250 د.ت</option>
-            <option value="st-4" data-longueur="25" data-prix="270" data-unite="لفة">بسيط الفتل (2,0م / 2,2مم) - 270 د.ت</option>
-          </optgroup>
-          <optgroup label="شباك مزدوج الفتل">
-            <option value="dt-1" data-longueur="50" data-prix="320" data-unite="لفة">مزدوج الفتل (2,0م / 1,6مم) - 320 د.ت</option>
-            <option value="dt-2" data-longueur="50" data-prix="220" data-unite="لفة">مزدوج الفتل (1,5م / 1,6مم) - 220 د.ت</option>
-            <option value="dt-3" data-longueur="20" data-prix="135" data-unite="لفة">مزدوج الفتل G.M (2,0م / 2,0مم) - 135 د.ت</option>
-            <option value="dt-4" data-longueur="20" data-prix="120" data-unite="لفة">مزدوج الفتل G.M (1,5م / 2,0مم) - 120 د.ت</option>
-          </optgroup>
-          <optgroup label="ألواح سياج صلبة">
-            <option value="pr-1" data-longueur="2.5" data-prix="140" data-unite="لوح">شباك صلب (1,5م / 4مم) - 140 د.ت</option>
-            <option value="pr-2" data-longueur="2.5" data-prix="160" data-unite="لوح">شباك صلب (2,0م / 4مم) - 160 د.ت</option>
-          </optgroup>
-          <optgroup label="إكسسوارات (أسلاك)">
-            <option value="fb-1" data-longueur="200" data-prix="60" data-unite="لفة">سلك شائك (200م / 1,6مم) - 60 د.ت</option>
-            <option value="fb-2" data-longueur="200" data-prix="80" data-unite="لفة">سلك شائك (200م / 1,8مم) - 80 د.ت</option>
-            <option value="fg-1" data-longueur="1" data-prix="6.5" data-unite="كغ">سلك مجلفن (1,3مم) - 6.5 د.ت / كغ</option>
-            <option value="fg-2" data-longueur="1" data-prix="6" data-unite="كغ">سلك مجلفن (2,7مم) - 6.0 د.ت / كغ</option>
-            <option value="fg-3" data-longueur="1" data-prix="5" data-unite="كغ">سلك مجلفن (4,9مم) - 5.0 د.ت / كغ</option>
-          </optgroup>
-        </select>
+        <label for="devis-produit" class="devis-label">1. اختر المنتج</label>
+        <!-- Les options sont générées depuis products.js -->
+        <select id="devis-produit" class="devis-input" data-autofocus></select>
       </div>
 
       <div>
-        <label for="devis-longueur" style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; display: block;">2. طول المحيط (بالمتر) أو الكمية (بالكغ)</label>
-        <input type="number" id="devis-longueur" placeholder="مثال: 580 (متر) أو 15 (كغ)" min="1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); font-family: var(--f-sans);">
+        <label for="devis-longueur" class="devis-label">2. طول المحيط (بالمتر) أو الكمية (بالكغ)</label>
+        <input type="number" id="devis-longueur" class="devis-input" placeholder="مثال: 580 (متر) أو 15 (كغ)" min="0" step="any" inputmode="decimal">
       </div>
 
-      <button onclick="ajouterArticleDevis()" style="background: var(--bg-2); color: var(--ink); border: 1px solid var(--line); padding: 12px; border-radius: 100px; font-weight: 700; font-size: 15px; cursor: pointer; transition: background 0.3s; font-family: var(--f-sans);">
-        + إضافة هذا المنتج
-      </button>
+      <button type="button" id="devis-ajouter" class="btn btn--secondary">+ إضافة هذا المنتج</button>
     </div>
 
-    <div id="zone-panier" style="display: none; padding-top: 20px;">
-      <h4 style="margin: 0 0 16px; font-family: var(--f-display); color: var(--ink); font-size: 20px; font-weight: 700;">تفاصيل طلبك</h4>
-      
-      <ul id="panier-liste" style="list-style: none; padding: 0; margin: 0 0 20px; max-height: 250px; overflow-y: auto;"></ul>
+    <div id="zone-panier" class="zone-panier" hidden>
+      <h4 class="panier-titre">تفاصيل طلبك</h4>
 
-      <div style="background: var(--bg-2); padding: 16px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <span style="font-weight: 700; color: var(--ink-2);">المجموع التقديري :</span>
-        <strong id="panier-total-prix" style="font-size: 22px; color: var(--ink);" dir="ltr">0.00 DT</strong>
+      <ul id="panier-liste" class="panier-liste" aria-live="polite"></ul>
+
+      <div class="panier-total">
+        <span>المجموع التقديري :</span>
+        <strong id="panier-total-prix" dir="ltr">0.00 DT</strong>
       </div>
+      <p class="panier-note">الأسعار تقديرية. سيتم تأكيد التسعيرة النهائية عبر واتساب.</p>
 
-      <button onclick="finaliserDemandeDevis()" style="width: 100%; background: var(--green); color: var(--white); padding: 16px; border-radius: 100px; font-weight: 700; font-size: 16px; cursor: pointer; border: none; transition: background 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: var(--f-sans);">
+      <button type="button" id="devis-envoyer" class="btn btn--primary">
         إرسال طلب التسعيرة النهائي
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>
       </button>
     </div>
   </div>
@@ -419,7 +282,8 @@
   </a>
 </div>
 
-<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="script.js"></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="products.js" defer></script>
+<script src="script.js" defer></script>
 </body>
 </html>
